@@ -1,40 +1,28 @@
-image: openjdk:8-jdk
-
-variables:
-  ANDROID_COMPILE_SDK: "28"
-  ANDROID_SDK_TOOLS: "4333796"
-
-before_script:
-  - apt-get --quiet update --yes
-  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
-  - unzip -q android-sdk.zip -d android-sdk-linux
-  - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-  - chmod +x ./gradlew
-  - set +o pipefail
-  - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
-  - set -o pipefail
-
-cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
-stages:
-  - build
-  - test
-
-build:
+# This file is a template, and might need editing before it works on your project.
+docker-build-master:
+  # Official docker image.
+  image: docker:latest
   stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - ./gradlew assembleDebug
-  tags:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
     - master
 
-test:
-  stage: test
+docker-build:
+  # Official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - ./gradlew test
-  tags:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  except:
     - master
