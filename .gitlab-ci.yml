@@ -37,4 +37,4 @@ test:
   script:
     - ./gradlew test
   tags:
-    - release
+    - master
