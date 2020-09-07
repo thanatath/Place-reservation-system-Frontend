@@ -1,13 +1,40 @@
-# This file is a template, and might need editing before it works on your project.
-# Full project: https://gitlab.com/pages/plain-html
-pages:
-  stage: deploy
+image: openjdk:8-jdk
+
+variables:
+  ANDROID_COMPILE_SDK: "28"
+  ANDROID_SDK_TOOLS: "4333796"
+
+before_script:
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
+  - unzip -q android-sdk.zip -d android-sdk-linux
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+  - chmod +x ./gradlew
+  - set +o pipefail
+  - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
+  - set -o pipefail
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
   script:
-    - mkdir .public
-    - cp -r * .public
-    - mv .public public
-  artifacts:
-    paths:
-      - public
-  only:
-    - master
+    - ./gradlew assembleDebug
+  tags:
+    - release
+
+test:
+  stage: test
+  script:
+    - ./gradlew test
+  tags:
+    - release
