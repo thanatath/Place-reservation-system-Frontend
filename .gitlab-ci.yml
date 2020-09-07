@@ -30,7 +30,7 @@ build:
   script:
     - ./gradlew assembleDebug
   tags:
-    - release
+    - master
 
 test:
   stage: test
