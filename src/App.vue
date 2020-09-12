@@ -1,42 +1,26 @@
 <template>
-<div>
-  <Headbar/>
+  <div>
+    <Headbar />
 
-
-
-  
-  <router-view/>
-  
-</div>
+    <router-view />
+  </div>
 </template>
 
 <script>
-
-
-
-import Headbar from './components/Headbar'
+import Headbar from './components/Headbar';
 export default {
-  name:'App',
-  components:{
-    Headbar
-  }
-,
-async mounted() {
-  
-//  await this.Parse.User.logIn("naing", "12345");
-
-// var currentUser = this.Parse.User.current();
-// if (currentUser) {
-//     console.log(currentUser.get('username'));
-// } else {
-//     // show the signup or login page
-// }
-
- 
-
-}
-}
+  name: 'App',
+  components: {
+    Headbar,
+  },
+  async mounted() {
+    //  await this.Parse.User.logIn("naing", "12345");
+    // var currentUser = this.Parse.User.current();
+    // if (currentUser) {
+    //     console.log(currentUser.get('username'));
+    // } else {
+    //     // show the signup or login page
+    // }
+  },
+};
 </script>
-
-
- 

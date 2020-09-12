@@ -3,16 +3,14 @@
     <!-- Nav Bar Zone-->
     <nav class="container navbar navbar-expand-lg navbar-light bg-light">
       <nav class="navbar navbar-light bg-light">
-        <router-link to="/"><a class="navbar-brand">
-          <img
-            src=".././assets/logo.svg"
-            width="30"
-            height="30"
-            alt=""
-          />
-        </a></router-link>
+        <router-link to="/"
+          ><a class="navbar-brand">
+            <img src=".././assets/logo.svg" width="30" height="30" alt="" /> </a
+        ></router-link>
       </nav>
-      <router-link to="/"><a class="navbar-brand kmitlfont" >หน้าหลัก</a></router-link>
+      <router-link to="/"
+        ><a class="navbar-brand kmitlfont">หน้าหลัก</a></router-link
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -27,9 +25,11 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link to="Placelist" ><a class="nav-link" 
-              >รายการสถานที่ <span class="sr-only">(current)</span></a
-            ></router-link>
+            <router-link to="Placelist"
+              ><a class="nav-link"
+                >รายการสถานที่ <span class="sr-only">(current)</span></a
+              ></router-link
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">ค้นหาสถานที่</a>
@@ -59,44 +59,41 @@
         <input
           class="form-control mr-sm-2"
           type="search"
-           v-model ="target"
+          v-model="target"
           placeholder="ค้นหาสถานที่"
           aria-label="Search"
         />
-        
-          
-        <button id='searchbutton' class="btn btn-outline-success my-2 my-sm-0" type="submit">
+
+        <button
+          @click="setsearch()"
+          id="searchbutton"
+          class="btn btn-outline-success my-2 my-sm-0"
+          type="submit"
+        >
           ค้นหา
-        </button>  
-          
+        </button>
       </div>
-       
 
       <!-- End Search Bar Zone-->
     </nav>
     <!-- End Nav Bar Zone-->
- 
-
- 
-    
- 
   </div>
 </template>
 
 <script>
- 
 export default {
-  name:'Headbar',
-   
+  name: 'Headbar',
+
   data() {
-    
     return {
-      target:''
-    }
+      target: '',
+    };
   },
   methods: {
- 
+    setsearch() {
+      this.$store.dispatch('searchAction', this.target);
+    },
   },
-}
-
+  mounted() {},
+};
 </script>
