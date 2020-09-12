@@ -54,39 +54,17 @@
         <div class="row justify-content-between">
           <!-- Type Zone -->
           <div class="col-sm-6">
-            <div class="card" style="width: auto">
-              <div class="card-header">ประเภทสถานที่ที่จะเข้าใช้งาน</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input
-                        v-model="paccess"
-                        @change="updatefindtext()"
-                        type="radio"
-                        class="form-check-input"
-                        name="req"
-                        value="ต้องขออนุญาต"
-                      />ต้องขออนุญาต
-                    </label>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input
-                        v-model="paccess"
-                        @change="updatefindtext()"
-                        type="radio"
-                        class="form-check-input"
-                        name="req"
-                        value="ไม่ต้องขออนุญาต"
-                      />ไม่ต้องขออนุญาต
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <div class="card" style="widt:100%;">
+  <div class="card-body">
+    <h5 class="card-title"> <span id="find" class="badge badge-primary">สนใจค้นหา</span></h5>
+ 
+                
+
+            <span style="white-space: pre-wrap; ">{{ findtext }}</span>
+ 
+  </div>
+</div>
+
           </div>
           <!-- End Type Zone -->
           <!-- Device Zone -->
@@ -136,13 +114,9 @@
           <!-- End Device Zone -->
         </div>
         <!-- Bottom Zone -->
-        <div class="row" style="margin-top: 2%">
-          <div class="col-sm-6">
-            <span id="find" class="badge badge-primary">สนใจค้นหา</span>
-
-            <span style="white-space: pre-wrap; " >{{ findtext }}</span>
-          </div>
-          <div class="col-sm-6">
+        <div class="row justify-content-end" style="margin-top: 2%">
+ 
+          <div  class="col-sm-6">
             <button type="button" class="btn btn-lg btn-block kmitlc">
               ค้นหา
             </button>
@@ -151,7 +125,7 @@
         <!-- End Bottom Zone -->
       </div>
       <!-- Right Zone -->
-      <div style="margin-top:10px"  class="col-sm-4">
+      <div style="margin-top:10px" class="col-sm-4">
         <div class="row">
           <div class="col">
             <div
@@ -203,6 +177,7 @@
         <!--End News -->
       </div>
     </div>
+ 
   </div>
 
   <!-- End Right Zone -->
@@ -215,25 +190,18 @@ export default {
   methods: {
     updatefindtext() {
       this.findtext =
-        ' สถานที่ประเภท' +
-        this.ptype +
-        ' ที่สามารถรองรับคนได้' +
-        this.pmax;
-      if (this.paccess !== '') {
-        this.findtext = this.findtext + ' โดยเป็นสถานที่ที่' + this.paccess;
-      }
-      if (Object.keys(this.devices).length !== 0) {
+        ' สถานที่ประเภท' + this.ptype + ' ที่สามารถรองรับคนได้' + this.pmax;
+      if (this.devices.length !== 0) {
         this.findtext = this.findtext + ' และประสงค์ใช้ ' + this.devices;
       }
+      
     },
   },
   data() {
     return {
       ptype: '', //ประเภทสถานที่
       pmax: '', //จำนวนรองรับ
-      paccess: '', //การขออนุญาตใช้สถานที่
       devices: [],
-      testarr: ['1', '2', '3'],
       findtext: '',
     };
   },
