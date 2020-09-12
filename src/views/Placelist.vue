@@ -73,11 +73,13 @@ export default {
 
   mounted() {
     this.query(this.search);
+    this.upsearchtext(this.search)
   },
   watch: {
     search: function(val) {
       this.query(val);
-      this.searchtext = val;
+      this.upsearchtext(val)
+       
     },
   },
 };
