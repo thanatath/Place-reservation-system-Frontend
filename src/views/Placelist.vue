@@ -3,7 +3,18 @@
     <div class="container">
       <div class="row" style="margin-top:20px;">
         <div v-if="searchtext" class="alert alert-primary" role="alert">
-          ผลการค้นหาของ : {{ searchtext }}
+          ผลการค้นหาของ : <span class="text-danger"> {{ searchtext }} </span>
+          <button
+            type="button"
+            @click="
+              upsearchtext('');
+              $store.dispatch('searchAction', '');
+            "
+            style="margin-left:5px;"
+            class="btn btn-info "
+          >
+            ลบการค้นหา
+          </button>
         </div>
       </div>
     </div>
@@ -73,13 +84,12 @@ export default {
 
   mounted() {
     this.query(this.search);
-    this.upsearchtext(this.search)
+    this.upsearchtext(this.search);
   },
   watch: {
     search: function(val) {
       this.query(val);
-      this.upsearchtext(val)
-       
+      this.upsearchtext(val);
     },
   },
 };

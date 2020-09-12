@@ -63,16 +63,19 @@
           placeholder="ค้นหาสถานที่"
           aria-label="Search"
         />
-<router-link to="Placelist">
-        <button
-          @click="setsearch()"
-          id="searchbutton"
-          class="btn btn-outline-success my-2 my-sm-0"
-          type="submit"
-        >
-          ค้นหา
-        </button>
-</router-link>
+        <router-link to="Placelist">
+          <button
+            @click="
+              setsearch();
+              target = '';
+            "
+            id="searchbutton"
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+          >
+            ค้นหา
+          </button>
+        </router-link>
       </div>
 
       <!-- End Search Bar Zone-->
@@ -95,6 +98,5 @@ export default {
       this.$store.dispatch('searchAction', this.target);
     },
   },
-  mounted() {},
 };
 </script>
