@@ -63,7 +63,7 @@
           placeholder="ค้นหาสถานที่"
           aria-label="Search"
         />
-
+<router-link to="Placelist">
         <button
           @click="setsearch()"
           id="searchbutton"
@@ -72,6 +72,7 @@
         >
           ค้นหา
         </button>
+</router-link>
       </div>
 
       <!-- End Search Bar Zone-->
