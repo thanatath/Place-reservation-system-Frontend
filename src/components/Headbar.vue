@@ -46,10 +46,20 @@
               ระบบสมาชิก
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">สมัครสมาชิก</a>
-              <a class="dropdown-item" href="#">ข้อมูลสมาชิก</a>
-              <a class="dropdown-item" href="#">รายการจอง</a>
-              <a class="dropdown-item" href="#">ออกจากระบบ</a>
+              <router-link v-if="!loginstate" to="User_Regis"
+                ><a class="dropdown-item">สมัครสมาชิก</a></router-link
+              >
+                            <router-link v-if="!loginstate" to="User_Login"
+                ><a class="dropdown-item">เข้าสู่ระบบ</a></router-link
+              >
+              <router-link v-if="loginstate" to="User_info">
+                <a class="dropdown-item">ข้อมูลสมาชิก</a></router-link
+              >
+              
+              <a v-if="loginstate" class="dropdown-item" href="#">รายการจอง</a>
+              <a  v-if="loginstate" class="dropdown-item" href="#" @click="logout()"
+                >ออกจากระบบ</a
+              >
             </div>
           </li>
         </ul>
@@ -80,23 +90,37 @@
 
       <!-- End Search Bar Zone-->
     </nav>
+     
     <!-- End Nav Bar Zone-->
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'Headbar',
 
   data() {
     return {
       target: '',
+       
     };
   },
   methods: {
     setsearch() {
       this.$store.dispatch('searchAction', this.target);
     },
+    logout(){
+this.Parse.User.logOut();
+this.$store.dispatch('loginstateAction','')
+this.$router.push('/')
+    }
   },
+  mounted() {
+         this.$store.dispatch('loginstateAction',this.Parse.User.current('username'))
+  
+  },
+     computed: mapState(['loginstate']),
+ 
 };
 </script>
