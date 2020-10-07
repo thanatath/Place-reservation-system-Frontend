@@ -2,6 +2,9 @@
   <div>
     <div class="container">
       <div class="row" style="margin-top:20px;">
+
+
+
         <div v-if="searchtext" class="alert alert-primary" role="alert">
           ผลการค้นหาของ : <span class="text-danger"> {{ searchtext }} </span>
           <button
@@ -19,7 +22,10 @@
       </div>
     </div>
     <div class="container">
+      <span v-if="this.searchfilter<1"><center style="color:red;">แย่จัง! ไม่พบผลการค้นที่ต้องการ <router-link to="/">กลับหน้าหลัก</router-link></center></span>
+
       <div class="row" style="margin:1%; ">
+        
         <div v-for="item in myplace" :key="item.Place_id" class="col-sm-4">
           <div class="card" style="width: 100%;margin-bottom:10px;">
             <img
@@ -46,6 +52,8 @@
               <a href="#" class=" btn btn-warning">สนใจจองสถานที่</a>
             </div>
           </div>
+
+          
           
         </div>
       </div>
@@ -70,28 +78,21 @@ export default {
         this.searchtext = text;
       }
     },
-    async query(data) {
-      this.myplace = await this.Parse.Cloud.run('place', { target: data });
-    },
+     
   },
 
   data() {
     return {
       myplace: Array,
       searchtext: this.search,
+      warning:'',
     };
   },
-  computed: mapState(['search']),
+  computed: mapState(['searchfilter']),
 
   mounted() {
-    this.query(this.search);
-    this.upsearchtext(this.search);
-  },
-  watch: {
-    search: function(val) {
-      this.query(val);
-      this.upsearchtext(val);
-    },
+    this.myplace = this.searchfilter
+ 
   },
 };
 </script>

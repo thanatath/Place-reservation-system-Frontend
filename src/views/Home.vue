@@ -42,9 +42,9 @@
                 class="custom-select"
                 id="inputGroupSelect01"
               >
-                <option value="ไม่เกิน 10 คน">ไม่เกิน 10 คน</option>
-                <option value="ไม่เกิน 50 คน">ไม่เกิน 50 คน</option>
-                <option value="ไม่เกิน 100 คน">ไม่เกิน 100 คน</option>
+                <option value="10">ไม่เกิน 10 คน</option>
+                <option value="50">ไม่เกิน 50 คน</option>
+                <option value="100">ไม่เกิน 100 คน</option>
               </select>
             </div>
           </div>
@@ -75,13 +75,13 @@
                 <li class="list-group-item">
                   <label class="checkbox-bootstrap">
                     <input
-                      value="โปรเจ็กเตอร์"
+                      value="โปรเจ็คเตอร์"
                       type="checkbox"
                       v-model="devices"
                       @change="updatefindtext()"
                     />
                     <span class="checkbox-placeholder"></span>
-                    โปรเจ็กเตอร์
+                    โปรเจ็คเตอร์
                   </label>
                 </li>
                 <li class="list-group-item">
@@ -117,7 +117,10 @@
         <div class="row justify-content-end" style="margin-top: 2%">
  
           <div  class="col-sm-6">
-            <button type="button" class="btn btn-lg btn-block kmitlc">
+
+
+
+            <button @click="searchfilter()" type="button" class="btn btn-lg btn-block kmitlc">
               ค้นหา
             </button>
           </div>
@@ -190,12 +193,23 @@ export default {
   methods: {
     updatefindtext() {
       this.findtext =
-        ' สถานที่ประเภท' + this.ptype + ' ที่สามารถรองรับคนได้' + this.pmax;
+        ' สถานที่ประเภท' + this.ptype + ' ที่สามารถรองรับคนได้ไม่เกิน ' + this.pmax +' คน';
       if (this.devices.length !== 0) {
         this.findtext = this.findtext + ' และประสงค์ใช้ ' + this.devices;
       }
       
+      
     },
+
+    async searchfilter(){
+       
+   
+this.$store.dispatch('search_filterAction', await this.Parse.Cloud.run('place', { type: this.ptype,devices:this.devices,max:this.pmax}));
+this.$router.push({ name: 'Placelist_filter'})
+ 
+      },
+
+    
   },
   data() {
     return {
@@ -203,12 +217,15 @@ export default {
       pmax: '', //จำนวนรองรับ
       devices: [],
       findtext: '',
+ 
     };
   },
+   
   mounted() {
     (this.ptype = 'อาคาร'),
-      (this.pmax = 'ไม่เกิน 10 คน'),
+      (this.pmax = '10'),
       this.updatefindtext();
+      this.$store.dispatch('search_filterAction','')
   },
 };
 </script>
