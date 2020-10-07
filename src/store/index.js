@@ -7,10 +7,14 @@ export default new Vuex.Store({
   state: {
     search: '',
     loginstate:'',
+    searchfilter:'',
   },
   mutations: {
     setsearch(state, value) {
       state.search = value;
+    },
+    setsearchfilter(state, value) {
+      state.searchfilter = value;
     },
     setloginstate(state, value) {
       state.loginstate = value;
@@ -28,6 +32,9 @@ export default new Vuex.Store({
     loginstateAction(context, value) {
       context.commit('setloginstate', value);
     },
+    search_filterAction(context,value){
+      context.commit('setsearchfilter', value);
+    }
   },
   modules: {},
 });

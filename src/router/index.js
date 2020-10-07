@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Placelist from '../views/Placelist.vue'
+import Placelist_filter from '../views/Placelist_filter.vue'
 import User_Regis from '../views/User_Regis.vue'
 import User_Info from '../views/User_Info.vue'
 import User_Login from '../views/User_Login.vue'
@@ -32,6 +33,11 @@ Vue.use(VueRouter)
   path: '/User_Login',
   name: 'User_Login',
   component: User_Login
+},
+{
+  path: '/Placelist_filter',
+  name: 'Placelist_filter',
+  component: Placelist_filter
 }
 ]
 

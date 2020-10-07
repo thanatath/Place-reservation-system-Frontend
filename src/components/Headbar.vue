@@ -9,7 +9,7 @@
         ></router-link>
       </nav>
       <router-link to="/"
-        ><a class="navbar-brand kmitlfont">หน้าหลัก</a></router-link
+        ><a class="navbar-brand kmitlfont">ค้นหา</a></router-link
       >
       <button
         class="navbar-toggler"
@@ -31,8 +31,10 @@
               ></router-link
             >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">ค้นหาสถานที่</a>
+          <li v-if="searchfilter" class="nav-item">
+
+            <router-link to="Placelist_filter"
+              ><a style="color:#ffc107;" class="nav-link" href="#">ค้นหาสถานที่</a></router-link>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -70,7 +72,7 @@
           class="form-control mr-sm-2"
           type="search"
           v-model="target"
-          placeholder="ค้นหาสถานที่"
+          placeholder="ชื่อสถานที่"
           aria-label="Search"
         />
         <router-link to="Placelist">
@@ -120,7 +122,7 @@ this.$router.push('/')
          this.$store.dispatch('loginstateAction',this.Parse.User.current('username'))
   
   },
-     computed: mapState(['loginstate']),
- 
+     computed: mapState(['loginstate','searchfilter']),
+  
 };
 </script>

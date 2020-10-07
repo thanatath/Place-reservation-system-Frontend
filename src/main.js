@@ -10,7 +10,9 @@ const ParsePlugin = {
   install(Vue) {
     console.log('[+]init parse server');
     Parse.initialize('myAppId'); // MyServe
-    Parse.serverURL = 'http://shibasan.3bbddns.com:15294/parse';
+    //Parse.serverURL = 'http://shibasan.3bbddns.com:15294/parse'; //product
+    Parse.serverURL = 'http://localhost:1337/parse';
+
     Vue.prototype.Parse = Parse;
   },
 };
