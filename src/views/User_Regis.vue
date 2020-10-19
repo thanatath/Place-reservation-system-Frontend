@@ -116,6 +116,9 @@
             aria-describedby="basic-addon1"
           />
         </div>
+                <span v-show="this.mail.includes('@')"  style="color:red;"
+          >ไม่จำเป็นต้องใส่ @kmitl.ac.th</span
+        >
         <div class="input-group mb-3">
           <input
             type="text"
@@ -194,7 +197,7 @@ export default {
     },
     checkformbutton() {
       return (
-        this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && (this.year != 0 || this.type == 'บุคลากร' ) && (this.passwd == this.passwdcf)
+        this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && (this.year != 0 || this.type == 'บุคลากร' ) && (this.passwd == this.passwdcf) && !(this.mail.includes('@'))
       );
     },
     checkformpwd() {
