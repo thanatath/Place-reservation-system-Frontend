@@ -43,7 +43,7 @@
               </li>
             </ul>
             <div class="d-flex justify-content-end card-body">
-              <a href="#" class=" btn btn-warning">สนใจจองสถานที่</a>
+              <a @click="testsendidplace(item.get('Place_id'))" class=" btn btn-warning">สนใจจองสถานที่</a>
             </div>
           </div>
           
@@ -73,6 +73,10 @@ export default {
     async query(data) {
       this.myplace = await this.Parse.Cloud.run('place', { target: data });
     },
+    testsendidplace(item){
+
+      alert(item)
+    }
   },
 
   data() {

@@ -20,7 +20,7 @@ export default {
     };
   },
   mounted() {
-      var currentUser = this.Parse.User.current()
+  var currentUser = this.Parse.User.current()
   this.username = currentUser.get('username')
   this.passwd = currentUser.get('password')
   this.mail = currentUser.get('email')

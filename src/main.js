@@ -5,7 +5,9 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Parse from 'parse';
 import store from './store';
-
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 const ParsePlugin = {
   install(Vue) {
     console.log('[+]init parse server');
