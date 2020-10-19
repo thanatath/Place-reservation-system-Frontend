@@ -27,7 +27,7 @@
             <span class="input-group-text" id="basic-addon1">รหัสผ่าน</span>
           </div>
           <input
-            type="text"
+            type="password"
             class="form-control"
             placeholder="รหัสผ่าน"
             v-model="passwd"
