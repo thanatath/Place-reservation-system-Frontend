@@ -175,6 +175,7 @@ export default {
         user.set('password', this.passwd);
         user.set('phone', this.phone);
         user.set('type', this.type);
+        if (this.type=='บุคลากร'){this.year = ''}
         user.set('year', this.year);
         user.set('bdate', this.bdate);
         user.set('email', this.mail + '@kmitl.ac.th');
@@ -193,7 +194,7 @@ export default {
     },
     checkformbutton() {
       return (
-        this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && this.year != 0
+        this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && (this.year != 0 || this.type == 'บุคลากร' ) && (this.passwd == this.passwdcf)
       );
     },
     checkformpwd() {

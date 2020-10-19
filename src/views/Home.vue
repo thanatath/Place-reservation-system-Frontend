@@ -180,7 +180,7 @@
         <!--End News -->
       </div>
     </div>
- 
+ <p style="color:white"> หลุ่มนี้ไม่มี นัดทะพูม ล้อมเขด</p>
   </div>
 
   <!-- End Right Zone -->
