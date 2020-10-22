@@ -1,10 +1,11 @@
 <template>
   <div>
+    
     <div class="container">
       <div class="row" style="margin-top:20px;">
         <div v-if="searchtext" class="alert alert-primary" role="alert">
           ผลการค้นหาของ : <span class="text-danger"> {{ searchtext }} </span>
-          <button
+          <!-- <button
             type="button"
             @click="
               upsearchtext('');
@@ -14,16 +15,18 @@
             class="btn btn-info "
           >
             ลบการค้นหา
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
     <div class="container">
+      <span v-if="(this.myplace).length==0"><center style="color:red;">แย่จัง! ไม่พบผลการค้นที่ต้องการ <router-link to="/">กลับหน้าหลัก</router-link></center></span>
       <div class="row" style="margin:1%; ">
         <div v-for="item in myplace" :key="item.Place_id" class="col-sm-4">
           <div class="card" style="width: 100%;margin-bottom:10px;">
             <img
               class="card-img-top"
+               
               :src="item.get('img').url()"
               alt="Card image cap"
             />
@@ -43,10 +46,36 @@
               </li>
             </ul>
             <div class="d-flex justify-content-end card-body">
-              <a @click="testsendidplace(item.get('Place_id'))" class=" btn btn-warning">สนใจจองสถานที่</a>
+              <a
+                @click="bookingaction(item.get('Place_id'))"
+                class=" btn btn-warning"
+                >สนใจจองสถานที่</a
+              >
             </div>
           </div>
-          
+          <div>
+            <div>
+              <b-modal v-model="modal" hide-footer hide-header>
+                <div class="d-block text-center">
+                  <h3>โปรดเข้าสู่ระบบก่อนเข้าจองสถานที่</h3>
+                </div>
+                <b-button
+                  class="mt-3"
+                  variant="outline-danger"
+                  block
+                  @click="$router.push('/User_Login')"
+                  >เข้าสู่ระบบ</b-button
+                >
+                <b-button
+                  class="mt-2"
+                  variant="outline-warning"
+                  block
+                  @click="$router.push('/User_Regis')"
+                  >สมัครสมาชิก</b-button
+                >
+              </b-modal>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -55,41 +84,51 @@
 
 <script>
 import { mapState } from 'vuex';
-
 export default {
   name: 'Placelist',
-
   methods: {
-    base64decode(id) {
-      return 'data:image/jpeg;base64,' + id;
-    },
-    upsearchtext(text) {
-      if (text.lenght < 0) {
-        this.searchtext = null;
-      } else {
-        this.searchtext = text;
-      }
-    },
+     upsearchtext(text) {
+        if (text.lenght < 0) {
+         this.searchtext = null;
+       } else {
+         this.searchtext = text;
+        }
+      },
     async query(data) {
       this.myplace = await this.Parse.Cloud.run('place', { target: data });
     },
-    testsendidplace(item){
-
-      alert(item)
-    }
+      bookingaction(placeid) {
+        if (!this.loginstate) {
+          this.modal = true;
+        } else {
+      this.$cookies.set('placebooking',placeid)
+          this.$router.push({ name: 'Booking' });
+        }
+      },
   },
 
   data() {
     return {
       myplace: Array,
       searchtext: this.search,
+      modal: false,
     };
   },
-  computed: mapState(['search']),
+  computed: mapState(['search', 'loginstate','searchfilter']),
 
   mounted() {
-    this.query(this.search);
-    this.upsearchtext(this.search);
+    if(this.searchfilter){
+      this.myplace = this.searchfilter
+      this.searchfilter = null
+    }else{
+    this.query(this.searchtext)
+     this.upsearchtext(this.searchtext);
+    
+    }
+
+ 
+    
+   
   },
   watch: {
     search: function(val) {

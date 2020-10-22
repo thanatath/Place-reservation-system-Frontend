@@ -205,7 +205,7 @@ export default {
        
    
 this.$store.dispatch('search_filterAction', await this.Parse.Cloud.run('place', { type: this.ptype,devices:this.devices,max:this.pmax}));
-this.$router.push({ name: 'Placelist_filter'})
+this.$router.push({ name: 'Placelist'})
  
       },
 
@@ -225,7 +225,9 @@ this.$router.push({ name: 'Placelist_filter'})
     (this.ptype = 'อาคาร'),
       (this.pmax = '10'),
       this.updatefindtext();
-      this.$store.dispatch('search_filterAction','')
-  },
+      this.$store.dispatch('search_filterAction',null)
+      this.$store.dispatch('searchAction',null)
+      
+  }
 };
 </script>

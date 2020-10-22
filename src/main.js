@@ -6,6 +6,9 @@ import VueAxios from 'vue-axios';
 import Parse from 'parse';
 import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import Carousel3d from 'vue-carousel-3d';
+Vue.use(require('vue-cookies'))
+Vue.use(Carousel3d);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 const ParsePlugin = {

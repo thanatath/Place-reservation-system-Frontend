@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     search_filterAction(context,value){
       context.commit('setsearchfilter', value);
-    }
+    },
   },
   modules: {},
 });

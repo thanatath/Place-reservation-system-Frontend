@@ -31,11 +31,6 @@
               ></router-link
             >
           </li>
-          <li v-if="searchfilter" class="nav-item">
-
-            <router-link to="Placelist_filter"
-              ><a style="color:#ffc107;" class="nav-link" href="#">ค้นหาสถานที่</a></router-link>
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -114,7 +109,7 @@ export default {
     },
     logout(){
 this.Parse.User.logOut();
-this.$store.dispatch('loginstateAction','')
+this.$store.dispatch('loginstateAction',null)
 this.$router.push('/')
     }
   },

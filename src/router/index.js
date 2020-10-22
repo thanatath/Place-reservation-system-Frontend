@@ -6,7 +6,7 @@ import Placelist_filter from '../views/Placelist_filter.vue'
 import User_Regis from '../views/User_Regis.vue'
 import User_Info from '../views/User_Info.vue'
 import User_Login from '../views/User_Login.vue'
-
+import Booking from '../views/Booking.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -39,6 +39,10 @@ Vue.use(VueRouter)
   path: '/Placelist_filter',
   name: 'Placelist_filter',
   component: Placelist_filter
+},{
+path: '/Booking',
+name: 'Booking',
+component: Booking
 }
 ]
 
