@@ -122,7 +122,7 @@ export default {
       this.searchfilter = null
     }else{
     this.query(this.searchtext)
-     this.upsearchtext(this.searchtext);
+     if(this.searchtext){this.upsearchtext(this.searchtext);}
     
     }
 
