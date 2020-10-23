@@ -126,9 +126,6 @@ export default {
     
     }
 
- 
-    
-   
   },
   watch: {
     search: function(val) {
