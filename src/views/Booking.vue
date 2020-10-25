@@ -93,7 +93,7 @@
               <h5 class="text-center">การจองในสถานที่นี้</h5>
             </div>
 
-            <table v-show="!booked.length==0" class="table">
+            <table v-show="!booked.length == 0" class="table">
               <thead>
                 <tr>
                   <th scope="col">คนจอง</th>
@@ -118,7 +118,10 @@
                 </tr>
               </tbody>
             </table>
-            <span v-show="booked.length==0" class="text-center" style="color:red;margin-bottom:15px;"
+            <span
+              v-show="booked.length == 0"
+              class="text-center"
+              style="color:red;margin-bottom:15px;"
               >ยังไม่มีผู้จองสถานที่นี้</span
             >
           </div>
@@ -131,6 +134,7 @@
             label-no-date-selected="เลือกวันที่จองสถานที่"
             locale="th"
             :min="new Date()"
+  @click="validstat=0"
             :max="maxdate"
             selected-variant="success"
             today-variant="info"
@@ -141,7 +145,7 @@
 
           <div class="row" style="margin-top:20px;">
             <div v-if="datevalue" class="col-sm">
-              <span v-if="checktimevalid()" style="color:red;"
+              <span v-if="!checktimevalid()" style="color:red;"
                 >ไม่สามารถจองเวลาที่ผ่านไปแล้วได้
                 กรุณาจองชั่วโมงหรือวันถัดไป</span
               >
@@ -149,15 +153,19 @@
                 เริ่มจอง {{ timeformat(converttime(timest)) }}
 
                 <b-form-input
+                :disabled="validstat!=1"
                   id="range-1"
                   v-model="timest"
                   type="range"
                   min="0"
                   max="9"
                 ></b-form-input>
-                <span v-show="!checktimevalid()">
+
+                <span v-show="checktimevalid()">
+                  
                   เป็นเวลา {{ timeed }} ชั่วโมง
                   <b-form-input
+                  :disabled="validstat!=1"
                     id="range-1"
                     v-model="timeed"
                     type="range"
@@ -165,6 +173,16 @@
                     max="3"
                   ></b-form-input>
                 </span>
+
+
+
+               <button  :disabled="!checktimevalid()"   class="btn btn-primary" @click="checkbookedforvalid()">ยืนยันเวลา</button>
+
+
+               <span v-show="validstat==true & rsbooked.length==0   "      style="color:orange;margin-left:15px;"
+                >ยังไม่ได้ยืนยันเวลา</span>
+                    <span v-show="rsbooked.length==1" style="color:red;margin-left:15px;"
+                >เวลานี้ถูกจองไปแล้ว</span>
               </div>
             </div>
             <div class="col-sm" v-if="datevalue">
@@ -194,9 +212,14 @@
 
       <div class="row justify-content-end" style="margin:1%;margin-top:50px;">
         <div class="col-sm-3">
+          <!-- <span v-if="validstat" style="color:red;"
+                >กรุณาเลือกเวลาจองและยืนยันการจองก่อนจองสถานที่</span
+              > -->
           <b-button
-            :disabled="Bookingvalid()"
+            :disabled="validstat"
+            
             class="btn btn-block"
+            
             @click="bookingaction(item.get('Place_id'))"
             variant="primary"
             >จอง</b-button
@@ -231,9 +254,26 @@ export default {
       booked: '',
       timest: 0.1,
       timeed: 1,
+      rsbooked:'',
+      validstat:'',
+
     };
   },
   methods: {
+
+
+
+    async checkbookedforvalid(){
+
+await this.querybooked() 
+      if(this.rsbooked.length>0){
+        this.validstat = true
+      }else{this.validstat = false}
+       
+  },
+    
+
+    
     get_month(num) {
       let thaimonth = new Array(
         'มกราคม',
@@ -260,9 +300,16 @@ export default {
         this.timeformat(parseInt(myar[0]) + parseInt(myar.length) - 1)
       );
     },
-    Bookingvalid() {
-      return this.checktimevalid && !this.datevalue.length > 0;
+
+       Bookingvalid() {
+ 
+      if (this.checktimevalid()==true && !this.validstat) {
+           return true}
+        
+
+       
     },
+
     rangtoarray() {
       var myar = new Array();
 
@@ -284,22 +331,23 @@ export default {
         Place_id: Place_id,
         Time_booking: this.rangtoarray(),
         Date_booking: new Date(this.datevalue),
+        Month_booking: new Date(this.datevalue).getMonth()+1,
+        Day_booking: new Date(this.datevalue).getDate(),
       });
     },
 
     async checkbooked() {
       this.booked = await this.Parse.Cloud.run('placeBooked', {
         Place_id: this.$cookies.get('placebooking'),
-        
       });
-       
     },
 
     checktimevalid() {
-      return (
-        this.timest <= parseInt(new Date().getHours() - 9) &&
-        new Date().getDate() == this.datevalue.substring(8, 10)
-      );
+      var x = new Boolean();
+      if (this.datevalue) {
+        x = new Date().getDate() == this.datevalue.substring(8, 10);
+      }
+      return !(this.timest <= parseInt(new Date().getHours() - 9) && x); //return false when it's not match (true case)
     },
     timeformat(time) {
       if (time < 12) {
@@ -327,6 +375,7 @@ export default {
     dateonContext(ctx) {
       this.dateformatted = ctx.selectedFormatted;
       this.nowday = ctx.getDay;
+      this.validstat = true
     },
 
     async query() {
@@ -341,16 +390,27 @@ export default {
     base64decode(id) {
       return 'data:image/jpeg;base64,' + id;
     },
+    async querybooked() {
+      var dv = new Date(this.datevalue).getDate();
+      var mv = new Date(this.datevalue).getMonth();
+       this.rsbooked = await this.Parse.Cloud.run('placeBookedsearch', {
+        Place_id: this.$cookies.get('placebooking'),
+        Time_booking: this.rangtoarray(),
+        Month_booking: mv+1,
+        Day_booking: dv,
+      })
+       
+    },
   },
   mounted() {
     if (!this.loginstate) {
       this.$router.push({ name: 'Home' });
     } else {
       this.query();
+      
     }
     this.maxdate.setDate(this.maxdate.getDate() + 30);
     this.checkbooked();
-    
   },
 
   computed: mapState(['loginstate']),

@@ -123,7 +123,6 @@ export default {
     }else{
     this.query(this.searchtext)
      if(this.searchtext){this.upsearchtext(this.searchtext);}
-    
     }
 
   },
