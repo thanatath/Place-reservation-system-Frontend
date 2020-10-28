@@ -147,14 +147,13 @@ export default {
   computed: mapState(['search', 'loginstate', 'searchfilter']),
 
   mounted() {
-    if (this.searchfilter) {
-      this.myplace = this.searchfilter;
-      this.searchfilter = null;
-    } else {
-      this.query(this.searchtext);
-      if (this.searchtext) {
-        this.upsearchtext(this.searchtext);
-      }
+    if(this.searchfilter){
+      this.myplace = this.searchfilter
+      this.searchfilter = null
+    }else{
+    this.query(this.searchtext)
+     if(this.searchtext){this.upsearchtext(this.searchtext);
+     }
     }
   },
   watch: {
