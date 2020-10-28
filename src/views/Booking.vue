@@ -153,6 +153,7 @@
                 เริ่มจอง {{ timeformat(converttime(timest)) }}
 
                 <b-form-input
+                :disabled="validstat!=1"
                   id="range-1"
                   v-model="timest"
                   type="range"
@@ -161,8 +162,10 @@
                 ></b-form-input>
 
                 <span v-show="checktimevalid()">
+                  
                   เป็นเวลา {{ timeed }} ชั่วโมง
                   <b-form-input
+                  :disabled="validstat!=1"
                     id="range-1"
                     v-model="timeed"
                     type="range"
@@ -170,7 +173,12 @@
                     max="3"
                   ></b-form-input>
                 </span>
-               <button  :disabled="!checktimevalid()"  class="btn btn-primary" @click="checkbookedforvalid()">ยืนยันเวลา</button>
+
+
+
+               <button  :disabled="!checktimevalid()"   class="btn btn-primary" @click="checkbookedforvalid()">ยืนยันเวลา</button>
+
+
                <span v-show="validstat==true & rsbooked.length==0   "      style="color:orange;margin-left:15px;"
                 >ยังไม่ได้ยืนยันเวลา</span>
                     <span v-show="rsbooked.length==1" style="color:red;margin-left:15px;"
