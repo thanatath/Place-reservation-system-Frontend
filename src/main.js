@@ -11,12 +11,19 @@ Vue.use(require('vue-cookies'))
 Vue.use(Carousel3d);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
 const ParsePlugin = {
   install(Vue) {
     console.log('[+]init parse server');
-    Parse.initialize('myAppId'); // MyServe
-    Parse.serverURL = 'http://shibasan.3bbddns.com:15294/parse'; //product
-      //Parse.serverURL = 'http://localhost:1337/parse'; //dev
+    var myparseServer;
+    if (Vue.config.devtools) { //check if it's in production mode
+      myparseServer = 'http://localhost:1337/parse'
+    }else{
+       myparseServer = 'http://shibasan.3bbddns.com:15294/parse'
+    }
+
+    Parse.initialize('myAppId'); 
+    Parse.serverURL = myparseServer; 
 
     Vue.prototype.Parse = Parse;
   },

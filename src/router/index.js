@@ -7,6 +7,10 @@ import User_Regis from '../views/User_Regis.vue'
 import User_Info from '../views/User_Info.vue'
 import User_Login from '../views/User_Login.vue'
 import Booking from '../views/Booking.vue'
+import Admin from '../views/Admin.vue'
+import Admin_News from '../views/Admin_News.vue'
+import Admin_Addplace from '../views/Admin_Addplace.vue';
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -43,7 +47,19 @@ Vue.use(VueRouter)
 path: '/Booking',
 name: 'Booking',
 component: Booking
-}
+},{
+  path: '/Admin',
+  name: 'Admin',
+  component: Admin
+  },{
+    path: '/Admin_News',
+    name: 'Admin_News',
+    component: Admin_News
+    },{
+      path: '/Admin_Addplace',
+      name: 'Admin_Addplace',
+      component: Admin_Addplace
+      },
 ]
 
 const router = new VueRouter({

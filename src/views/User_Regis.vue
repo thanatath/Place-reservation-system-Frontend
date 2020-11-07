@@ -4,7 +4,7 @@
       <div class="col-sm">
         <img
           class="img-fluid"
-          src="https://www.cs-camp.net/assets/images/logo/Sub_Logo_KMITL_KMITL.png"
+          src="../assets/Sub_Logo_KMITL_KMITL.png"
         />
       </div>
       <div class="col-sm ">

@@ -134,7 +134,7 @@
             label-no-date-selected="เลือกวันที่จองสถานที่"
             locale="th"
             :min="new Date()"
-  @click="validstat=0"
+            @click="validstat = 0"
             :max="maxdate"
             selected-variant="success"
             today-variant="info"
@@ -153,7 +153,7 @@
                 เริ่มจอง {{ timeformat(converttime(timest)) }}
 
                 <b-form-input
-                :disabled="validstat!=1"
+                  :disabled="validstat != 1"
                   id="range-1"
                   v-model="timest"
                   type="range"
@@ -162,10 +162,9 @@
                 ></b-form-input>
 
                 <span v-show="checktimevalid()">
-                  
                   เป็นเวลา {{ timeed }} ชั่วโมง
                   <b-form-input
-                  :disabled="validstat!=1"
+                    :disabled="validstat != 1"
                     id="range-1"
                     v-model="timeed"
                     type="range"
@@ -174,15 +173,24 @@
                   ></b-form-input>
                 </span>
 
+                <button
+                  :disabled="!checktimevalid()"
+                  class="btn btn-primary"
+                  @click="checkbookedforvalid()"
+                >
+                  ยืนยันเวลา
+                </button>
 
-
-               <button  :disabled="!checktimevalid()"   class="btn btn-primary" @click="checkbookedforvalid()">ยืนยันเวลา</button>
-
-
-               <span v-show="validstat==true & rsbooked.length==0   "      style="color:orange;margin-left:15px;"
-                >ยังไม่ได้ยืนยันเวลา</span>
-                    <span v-show="rsbooked.length==1" style="color:red;margin-left:15px;"
-                >เวลานี้ถูกจองไปแล้ว</span>
+                <span
+                  v-show="(validstat == true) & (rsbooked.length == 0)"
+                  style="color:orange;margin-left:15px;"
+                  >ยังไม่ได้ยืนยันเวลา</span
+                >
+                <span
+                  v-show="rsbooked.length == 1"
+                  style="color:red;margin-left:15px;"
+                  >เวลานี้ถูกจองไปแล้ว</span
+                >
               </div>
             </div>
             <div class="col-sm" v-if="datevalue">
@@ -217,9 +225,7 @@
               > -->
           <b-button
             :disabled="validstat"
-            
             class="btn btn-block"
-            
             @click="bookingaction(item.get('Place_id'))"
             variant="primary"
             >จอง</b-button
@@ -254,26 +260,20 @@ export default {
       booked: '',
       timest: 0.1,
       timeed: 1,
-      rsbooked:'',
-      validstat:'',
-
+      rsbooked: '',
+      validstat: '',
     };
   },
   methods: {
+    async checkbookedforvalid() {
+      await this.querybooked();
+      if (this.rsbooked.length > 0) {
+        this.validstat = true;
+      } else {
+        this.validstat = false;
+      }
+    },
 
-
-
-    async checkbookedforvalid(){
-
-await this.querybooked() 
-      if(this.rsbooked.length>0){
-        this.validstat = true
-      }else{this.validstat = false}
-       
-  },
-    
-
-    
     get_month(num) {
       let thaimonth = new Array(
         'มกราคม',
@@ -301,13 +301,10 @@ await this.querybooked()
       );
     },
 
-       Bookingvalid() {
- 
-      if (this.checktimevalid()==true && !this.validstat) {
-           return true}
-        
-
-       
+    Bookingvalid() {
+      if (this.checktimevalid() == true && !this.validstat) {
+        return true;
+      }
     },
 
     rangtoarray() {
@@ -331,7 +328,7 @@ await this.querybooked()
         Place_id: Place_id,
         Time_booking: this.rangtoarray(),
         Date_booking: new Date(this.datevalue),
-        Month_booking: new Date(this.datevalue).getMonth()+1,
+        Month_booking: new Date(this.datevalue).getMonth() + 1,
         Day_booking: new Date(this.datevalue).getDate(),
       });
     },
@@ -375,7 +372,7 @@ await this.querybooked()
     dateonContext(ctx) {
       this.dateformatted = ctx.selectedFormatted;
       this.nowday = ctx.getDay;
-      this.validstat = true
+      this.validstat = true;
     },
 
     async query() {
@@ -393,13 +390,12 @@ await this.querybooked()
     async querybooked() {
       var dv = new Date(this.datevalue).getDate();
       var mv = new Date(this.datevalue).getMonth();
-       this.rsbooked = await this.Parse.Cloud.run('placeBookedsearch', {
+      this.rsbooked = await this.Parse.Cloud.run('placeBookedsearch', {
         Place_id: this.$cookies.get('placebooking'),
         Time_booking: this.rangtoarray(),
-        Month_booking: mv+1,
+        Month_booking: mv + 1,
         Day_booking: dv,
-      })
-       
+      });
     },
   },
   mounted() {
@@ -407,7 +403,6 @@ await this.querybooked()
       this.$router.push({ name: 'Home' });
     } else {
       this.query();
-      
     }
     this.maxdate.setDate(this.maxdate.getDate() + 30);
     this.checkbooked();
