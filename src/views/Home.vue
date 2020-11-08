@@ -316,10 +316,15 @@
             </ul>
           </div>
         </div>
+
+<div class="col">
+<router-link to="Admin"> <button type="button" style="width:100%;margin-top:15px;" class="btn btn-info ">ผู้ดูแลระบบ</button></router-link>
+<button type="button" style="width:100%;margin-top:7px;" class="btn btn-success ">ฝ่ายอาคารและสถานที่</button>
+</div>
+
         <!--End News -->
       </div>
     </div>
-    <p style="color:white">หลุ่มนี้ไม่มี นัดทะพูม ล้อมเขด</p>
   </div>
 
   <!-- End Right Zone -->
