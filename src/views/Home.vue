@@ -311,17 +311,20 @@
                 >แจ้งข่าวสาร</span
               >
             </h5>
-            <ul class="list-group">
-              <li class="list-group-item">ข่าว 1</li>
-              <li class="list-group-item">ข่าว 2</li>
-              <li class="list-group-item">ข่าว 3</li>
+            <ul class="list-group" v-for="item in News_Contain" :key="item.id">
+              <li class="list-group-item">{{item.get('News_Contain')}}</li>
             </ul>
           </div>
         </div>
+
+<div class="col">
+<router-link to="Admin"> <button type="button" style="width:100%;margin-top:15px;" class="btn btn-info ">ผู้ดูแลระบบ</button></router-link>
+<button type="button" style="width:100%;margin-top:7px;" class="btn btn-success ">ฝ่ายอาคารและสถานที่</button>
+</div>
+
         <!--End News -->
       </div>
     </div>
-    <p style="color:white">หลุ่มนี้ไม่มี นัดทะพูม ล้อมเขด</p>
   </div>
 
   <!-- End Right Zone -->
@@ -359,6 +362,15 @@ if(this.ptype == 'ทั้งหมด'){this.ptype=null}
       );
       this.$router.push({ name: 'Placelist' });
     },
+
+    async queryNews() {
+      try {
+        this.News_Contain = await this.Parse.Cloud.run('News');
+      } catch (error) {
+        alert(error);
+      }
+      }
+
   },
   data() {
     return {
@@ -366,6 +378,7 @@ if(this.ptype == 'ทั้งหมด'){this.ptype=null}
       pmax: '', //จำนวนรองรับ
       devices: [],
       findtext: '',
+      News_Contain:'',
     };
   },
 
@@ -373,6 +386,7 @@ if(this.ptype == 'ทั้งหมด'){this.ptype=null}
     (this.ptype = 'ทั้งหมด'), (this.pmax = 'ไม่จำกัด'), this.updatefindtext();
     this.$store.dispatch('search_filterAction', null);
     this.$store.dispatch('searchAction', null);
+    this.queryNews();
   },
 };
 </script>

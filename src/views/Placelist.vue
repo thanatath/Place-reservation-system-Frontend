@@ -4,22 +4,11 @@
       <div class="row" style="margin-top:20px;">
         <div v-if="searchtext" class="alert alert-primary" role="alert">
           ผลการค้นหาของ : <span class="text-danger"> {{ searchtext }} </span>
-          <!-- <button
-            type="button"
-            @click="
-              upsearchtext('');
-              $store.dispatch('searchAction', '');
-            "
-            style="margin-left:5px;"
-            class="btn btn-info "
-          >
-            ลบการค้นหา
-          </button> -->
         </div>
       </div>
     </div>
     <div class="container">
-      <span v-if="this.myplace.length == 0"
+      <span v-if="this.myplace.length == 0 "
         ><center style="color:red;">
           แย่จัง! ไม่พบผลการค้นที่ต้องการ
           <router-link to="/">กลับหน้าหลัก</router-link>
@@ -147,13 +136,15 @@ export default {
   computed: mapState(['search', 'loginstate', 'searchfilter']),
 
   mounted() {
-    if(this.searchfilter){
-      this.myplace = this.searchfilter
-      this.searchfilter = null
-    }else{
-    this.query(this.searchtext)
-     if(this.searchtext){this.upsearchtext(this.searchtext);
-     }
+    if (this.searchfilter) {
+      this.myplace = this.searchfilter;
+      if(this.myplace.length==0){this.pageload=true}
+      this.$store.dispatch('search_filterAction', null);
+    } else {
+      this.query(this.searchtext);
+      if (this.searchtext) {
+        this.upsearchtext(this.searchtext);
+      }
     }
   },
   watch: {
