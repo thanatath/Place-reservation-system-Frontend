@@ -20,14 +20,14 @@
           ></b-form-file>
           <b-form-file
             style="margin-bottom:15px;"
-            v-model="file2"
+            @change="photo2($event)"
             :state="Boolean(file2)"
             placeholder="เลือกรูปภาพที่ 2 ... "
             drop-placeholder="Drop file here..."
           ></b-form-file>
           <b-form-file
             style="margin-bottom:15px;"
-            v-model="file3"
+            @change="photo3($event)"
             :state="Boolean(file3)"
             placeholder="เลือกรูปภาพที่ 3 ... "
             drop-placeholder="Drop file here..."
@@ -310,7 +310,7 @@ export default {
     },
     photo2(event) {
       this.file2 = new this.Parse.File(
-        'image1.png',
+        'image2.png',
         event.target.files[0],
         'image/png'
       );
@@ -318,7 +318,7 @@ export default {
     },
     photo3(event) {
       this.file3 = new this.Parse.File(
-        'image1.png',
+        'image3.png',
         event.target.files[0],
         'image/png'
       );
@@ -330,7 +330,7 @@ export default {
         file1: this.file1,
         file2: this.file2,
         file3: this.file3,
-        devices: this.devices,
+        placeDevices: this.devices,
         placeName: this.placeName,
         placeType: this.placeType,
         placeMax: this.placeMax,

@@ -137,7 +137,7 @@
           <div class="col-sm-6">
             <button
               @click="register()"
-              :disabled="!checkformbutton()"
+              :disabled="!checkformbutton()&&(isNaN(this.phone))"
               style="width:100%"
               type="button"
               class="btn btn-dark "
@@ -197,7 +197,7 @@ export default {
     },
     checkformbutton() {
       return (
-        this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && (this.year != 0 || this.type == 'บุคลากร' ) && (this.passwd == this.passwdcf) && !(this.mail.includes('@'))
+        this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && (this.year != 0 || this.type == 'บุคลากร' ) && (this.passwd == this.passwdcf) && !(this.mail.includes('@')) && (this.passwd>0) 
       );
     },
     checkformpwd() {

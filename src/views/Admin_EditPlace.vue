@@ -1,12 +1,26 @@
 <template>
   <div>
     <div class="container" style="margin-top:1%;">
-            <div v-show="myplaceselect" class="alert adminStyle" role="alert">
+      <div v-show="myplaceselect" class="alert adminStyle" role="alert">
         <h4 class="text-center">แก้ไข, ลบ สถานที่</h4>
       </div>
+      <div v-show="myplaceselect" class="row" style="margin-bottom:15px;">
+        <div class="col text-center">
+          <h5>รูปที่ 1</h5>
+
+          <img :src="placeImg1" class="img-fluid" />
+        </div>
+        <div class="col-sm text-center">
+          <h5>รูปที่ 2</h5>
+          <img :src="placeImg2" class="img-fluid" />
+        </div>
+        <div class="col-sm text-center">
+          <h5>รูปที่ 2</h5>
+          <img :src="placeImg3" class="img-fluid" />
+        </div>
+      </div>
       <div v-show="myplaceselect" class="row">
-        
-        <div class="col-sm-5">
+        <div class="col-sm">
           <b-form-file
             style="margin-bottom:15px;"
             @change="photo1($event)"
@@ -16,6 +30,7 @@
           ></b-form-file>
           <b-form-file
             style="margin-bottom:15px;"
+            @change="photo2($event)"
             v-model="file2"
             :state="Boolean(file2)"
             placeholder="เลือกรูปภาพแทนที่รูปที่ 2 ... "
@@ -23,6 +38,7 @@
           ></b-form-file>
           <b-form-file
             style="margin-bottom:15px;"
+            @change="photo3($event)"
             v-model="file3"
             :state="Boolean(file3)"
             placeholder="เลือกรูปภาพแทนที่รูปที่ 3 ... "
@@ -264,6 +280,23 @@
           </div>
         </div>
       </div>
+      <div v-show="myplaceselect">
+        <div class="row justify-content-end" style="margin:1%;margin-top:50px;">
+          <div style="margin-bottom:15px;" class="col-sm-3">
+            <b-button
+              class="btn btn-block btn btn-warning"
+              @click="updatePlace()"
+              >แก้ไขสถานที่</b-button
+            >
+          </div>
+          <div class="col-sm-3">
+           
+              <b-button @click="clearselect" class="btn btn-block"
+                >ยกเลิก</b-button
+              >
+          </div>
+        </div>
+      </div>
       <div class="row" style="margin-top:15px;">
         <div class="col-sm">
           <div class="alert adminStyle" role="alert">
@@ -288,37 +321,34 @@
                 <td>
                   <button
                     type="button"
-                    @click="queryselect(item.id);"
-                     
+                    @click="queryselect(item.id)"
                     class="btn btn-warning"
                   >
                     แก้ไข
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger">ลบ</button>
+                  <button type="button" @click="place_Del(item.id)" class="btn btn-danger">ลบ</button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        
       </div>
 
-      
-        <div class="row justify-content-end">
-          <div class="col-4">
-            <router-link to="Admin">
-              <button
-                style="width:100%;margin-top:10px;"
-                type="button"
-                class="btn btn-secondary"
-              >
-                กลับ
-              </button></router-link
+      <div class="row justify-content-end">
+        <div class="col-4">
+          <router-link to="Admin">
+            <button
+              style="width:100%;margin-top:10px;"
+              type="button"
+              class="btn btn-secondary"
             >
-          </div>
+              กลับ
+            </button></router-link
+          >
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -340,15 +370,66 @@ export default {
       placePhone: null,
       placeDetail: null,
       placeAddress: null,
+      placeImg1: null,
+      placeImg2: null,
+      placeImg3: null,
+      placeoid:null,
     };
   },
 
   methods: {
+    photo1(event) {
+      this.file1 = new this.Parse.File(
+        'image1.png',
+        event.target.files[0],
+        'image/png'
+      );
+      this.file1.save();
+    },
+    photo2(event) {
+      this.file2 = new this.Parse.File(
+        'image2.png',
+        event.target.files[0],
+        'image/png'
+      );
+      this.file2.save();
+       
+    },
+    photo3(event) {
+      this.file3 = new this.Parse.File(
+        'image3.png',
+        event.target.files[0],
+        'image/png'
+      );
+      this.file3.save();
+    },
+
+    async updatePlace() {
+      await this.Parse.Cloud.run('place_Update', {
+        placeOid: this.placeoid,
+        file1: this.file1,
+        file2: this.file2,
+        file3: this.file3,
+        devices: this.devices,
+        placeName: this.placeName,
+        placeType: this.placeType,
+        placeMax: this.placeMax,
+        placePhone: this.placePhone,
+        placeDetail: this.placeDetail,
+        placeAddress: this.placeAddress,
+      });
+      await this.query();
+      await this.queryselect(this.placeoid)
+    },
+    clearselect() {
+      this.myplaceselect = '';
+    },
+
     async queryselect(placeId) {
       this.myplaceselect = await this.Parse.Cloud.run('place', {
         obId: placeId,
       });
-
+      this.placeoid = this.myplaceselect[0].id;
       this.placeName = this.myplaceselect[0].get('Place_name');
       this.placeType = this.myplaceselect[0].get('Place_type');
       this.placeMax = this.myplaceselect[0].get('Place_max');
@@ -356,10 +437,17 @@ export default {
       this.placeDetail = this.myplaceselect[0].get('Place_detail');
       this.placeAddress = this.myplaceselect[0].get('Place_address');
       this.devices = this.myplaceselect[0].get('Place_devices');
-      window.scrollTo(0, 0)
+      this.placeImg1 = this.myplaceselect[0].get('img').url();
+      this.placeImg2 = this.myplaceselect[0].get('img_2').url();
+      this.placeImg3 = this.myplaceselect[0].get('img_3').url();
+      window.scrollTo(0, 0);
     },
     async query() {
       this.myplace = await this.Parse.Cloud.run('place');
+    },
+        async place_Del(placeoid) {
+         
+      await this.Parse.Cloud.run('place_Del',{ delid:placeoid});
     },
   },
   mounted() {
@@ -368,5 +456,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
