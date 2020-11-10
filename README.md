@@ -1,5 +1,13 @@
+
 **โปรเจค "ระบบจองสถานที่จัดกิจกรรมภายในคณะวิศวกรรมศาสตร์"**
+
+ **install package for Dev**
+
+    npm install
  
+**Run Product (Front End only)**
+
+    npm run serve
 
 ผู้ใช้บริการ
     
