@@ -42,7 +42,7 @@
             </ul>
             <div class="d-flex justify-content-end card-body">
               <a
-                @click="bookingaction(item.get('Place_id'))"
+                @click="bookingaction(item.id)"
                 class=" btn btn-warning"
                 >สนใจจองสถานที่</a
               >

@@ -8,7 +8,7 @@
          <router-link to="Admin_Addplace"> <button type="button" style="margin-top:7px;" class="btn btn-secondary btn-sm btn-block">เพิ่มข้อมูลสถานที่</button></router-link>
          <router-link to="Admin_EditPlace"><button type="button" style="margin-top:7px;" class="btn btn-secondary btn-sm btn-block">แก้ไข, ลบ ข้อมูลสถานที่</button></router-link>
          <router-link to="Admin_News"><button type="button" style="margin-top:7px;" class="btn btn-secondary btn-sm btn-block">ระบบข่าวสาร</button></router-link>
-         <router-link to="Admin_News"><button type="button" style="margin-top:7px;" class="btn btn-secondary btn-sm btn-block">แก้ไข ข้อมูลสมาชิก</button></router-link>
+         <router-link to="Admin_UserM"><button type="button" style="margin-top:7px;" class="btn btn-secondary btn-sm btn-block">ข้อมูลสมาชิก</button></router-link>
  
 
         </div>

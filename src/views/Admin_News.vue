@@ -106,7 +106,6 @@ export default {
 
   mounted() {
     this.queryNews();
-    
   },
 };
 </script>
