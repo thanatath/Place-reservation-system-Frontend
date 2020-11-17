@@ -11,7 +11,8 @@ import Admin from '../views/Admin.vue';
 import Admin_News from '../views/Admin_News.vue';
 import Admin_Addplace from '../views/Admin_Addplace.vue';
 import Admin_EditPlace from '../views/Admin_EditPlace.vue';
-
+import Admin_UserM from '../views/Admin_UserM.vue';
+import User_Booking from '../views/User_Booking.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -69,6 +70,15 @@ const routes = [
     path: '/Admin_EditPlace',
     name: 'Admin_EditPlace',
     component: Admin_EditPlace,
+  },
+  {
+    path: '/Admin_UserM',
+    name: 'Admin_UserM',
+    component: Admin_UserM,
+  },  {
+    path: '/User_Booking',
+    name: 'User_Booking',
+    component: User_Booking,
   },
 ];
 

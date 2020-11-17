@@ -195,6 +195,10 @@ export default {
         }
       }
     },
+            async user_Del(userOid) {
+         
+      await this.Parse.Cloud.run('user_Del',{ delid:userOid});
+    },
     checkformbutton() {
       return (
         this.mail && this.phone && this.username && this.phone.length <= 10 && this.bdate && this.type != 0 && (this.year != 0 || this.type == 'บุคลากร' ) && (this.passwd == this.passwdcf) && !(this.mail.includes('@')) && (this.passwd>0) 

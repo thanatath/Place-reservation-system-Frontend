@@ -206,9 +206,7 @@
                     <u>จนถึงเวลา</u>
 
                     {{
-                      timeformat(
-                        converttime(parseInt(timest) + parseInt(timeed))
-                      )
+                      timeformat(converttime(parseInt(timest) + parseInt(timeed)))
                     }}
                   </p>
                 </div>
@@ -226,7 +224,7 @@
           <b-button
             :disabled="validstat"
             class="btn btn-block"
-            @click="bookingaction(item.get('Place_id'))"
+            @click="bookingaction(item.id,item.get('Place_name'),item.get('Place_phone'))"
             variant="primary"
             >จอง</b-button
           >
@@ -318,25 +316,35 @@ export default {
       ) {
         myar.push(index);
       }
+console.log(myar);
       return myar;
     },
 
-    bookingaction(Place_id) {
+  async bookingaction(Place_id,Place_name,Place_contact) {
       var currentUser = this.Parse.User.current();
-      this.Parse.Cloud.run('booking', {
+      await this.Parse.Cloud.run('booking', {
         Name_booking: currentUser.get('username'),
         Place_id: Place_id,
+        Place_name:Place_name,
+        Place_contact:Place_contact,
+        Context_time:"ตั้งแต่ " + this.timeformat(this.converttime(parseInt(this.timest))) + " ถึง" + this.timeformat(this.converttime(parseInt(this.timest) + parseInt(this.timeed))),
+        Context_date:this.dateformatted,
         Time_booking: this.rangtoarray(),
         Date_booking: new Date(this.datevalue),
         Month_booking: new Date(this.datevalue).getMonth() + 1,
         Day_booking: new Date(this.datevalue).getDate(),
       });
-    },
+      this.$router.push({ name: 'User_Booking' });
 
+    },
+async clearbooked(){
+  this.booked=null
+},
     async checkbooked() {
       this.booked = await this.Parse.Cloud.run('placeBooked', {
         Place_id: this.$cookies.get('placebooking'),
       });
+      
     },
 
     checktimevalid() {
@@ -378,7 +386,9 @@ export default {
     async query() {
       this.myplace = await this.Parse.Cloud.run('place', {
         placeid: this.$cookies.get('placebooking'),
+        
       });
+       
     },
     cancelbooking() {
       this.$cookies.remove('placebooking');
@@ -396,6 +406,7 @@ export default {
         Month_booking: mv + 1,
         Day_booking: dv,
       });
+      
     },
   },
   mounted() {
