@@ -64,10 +64,10 @@
                     class="form-control"
                   >
                     <option value="0" disabled>หลักสูตร</option>
-                    <option>ต่อเนื่อง</option>
-                    <option>ปกติ</option>
-                    <option>อินเตอร์</option>
-                    <option>บุคลากร</option>
+                    <option disabled>ต่อเนื่อง</option>
+                    <option disabled>ปกติ</option>
+                    <option disabled>อินเตอร์</option>
+                    <option disabled>บุคลากร</option>
                   </select>
                 </div>
 
@@ -80,10 +80,10 @@
                   class="form-control"
                 >
                   <option value="0" disabled>ชั้นปี</option>
-                  <option value="1">ปี 1</option>
-                  <option value="2">ปี 2</option>
-                  <option value="3">ปี 3</option>
-                  <option value="4">ปี 4</option>
+                  <option disabled  value="1">ปี 1</option>
+                  <option disabled value="2">ปี 2</option>
+                  <option disabled value="3">ปี 3</option>
+                  <option  disabled value="4">ปี 4</option>
                 </select>
               </div>
 
