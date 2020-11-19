@@ -13,6 +13,7 @@ import Admin_Addplace from '../views/Admin_Addplace.vue';
 import Admin_EditPlace from '../views/Admin_EditPlace.vue';
 import Admin_UserM from '../views/Admin_UserM.vue';
 import User_Booking from '../views/User_Booking.vue';
+import Building_Home from '../views/Building_Home.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -79,6 +80,11 @@ const routes = [
     path: '/User_Booking',
     name: 'User_Booking',
     component: User_Booking,
+  },
+  {
+    path: '/Building_Home',
+    name: 'Building_Home',
+    component: Building_Home,
   },
 ];
 

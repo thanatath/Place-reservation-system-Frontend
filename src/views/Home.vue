@@ -319,7 +319,7 @@
 
 <div class="col">
 <router-link to="Admin"> <button type="button" style="width:100%;margin-top:15px;" class="btn btn-info ">ผู้ดูแลระบบ</button></router-link>
-<button type="button" style="width:100%;margin-top:7px;" class="btn btn-success ">ฝ่ายอาคารและสถานที่</button>
+<router-link to="Building_Home"><button type="button" style="width:100%;margin-top:7px;" class="btn btn-success ">ฝ่ายอาคารและสถานที่</button></router-link>
 </div>
 
         <!--End News -->

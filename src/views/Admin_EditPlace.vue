@@ -7,7 +7,6 @@
       <div v-show="myplaceselect" class="row" style="margin-bottom:15px;">
         <div class="col text-center">
           <h5>รูปที่ 1</h5>
-
           <img :src="placeImg1" class="img-fluid" />
         </div>
         <div class="col-sm text-center">
