@@ -52,8 +52,14 @@
               <router-link v-if="loginstate" to="User_info">
                 <a class="dropdown-item">ข้อมูลสมาชิก</a></router-link
               >
+
               <router-link to="User_Booking" >
               <a v-if="loginstate" class="dropdown-item" href="#">รายการจอง</a></router-link>
+
+                            <router-link v-if="loginstate" to="User_Noti">
+                <a class="dropdown-item">รายการแจ้งเรื่อง</a></router-link
+              >
+
               <a  v-if="loginstate" class="dropdown-item" href="#" @click="logout()"
                 >ออกจากระบบ</a
               >
