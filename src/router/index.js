@@ -14,6 +14,8 @@ import Admin_EditPlace from '../views/Admin_EditPlace.vue';
 import Admin_UserM from '../views/Admin_UserM.vue';
 import User_Booking from '../views/User_Booking.vue';
 import Building_Home from '../views/Building_Home.vue';
+import User_Noti from '../views/User_Noti.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -85,6 +87,11 @@ const routes = [
     path: '/Building_Home',
     name: 'Building_Home',
     component: Building_Home,
+  },
+  {
+    path: '/User_Noti',
+    name: 'User_Noti',
+    component: User_Noti,
   },
 ];
 

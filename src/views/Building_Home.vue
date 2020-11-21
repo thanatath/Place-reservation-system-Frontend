@@ -16,6 +16,8 @@
             <th scope="col">สถานที่</th>
             <th scope="col">ประเภท</th>
             <th scope="col">รายละเอียด</th>
+            <th scope="col">สถานะ</th>
+            <th scope="col">รับเรื่อง</th>
           </tr>
         </thead>
         <tbody v-for="item in target" :key="item.item">
@@ -24,6 +26,16 @@
             <td>{{ item.get('place_Name') }}</td>
             <td>{{ item.get('noti_Type') }}</td>
             <td>{{ item.get('noti_Description') }}</td>
+            <td>{{ item.get('status') }}</td>
+            <td> 
+
+              <div class="col-sm">
+                <b-button @click="noti_Reply(item.id);" class="btn  btn-warning"
+                  >รับเรื่อง</b-button
+                >
+              </div>
+
+            </td>
           </tr>
         </tbody>
       </table>
@@ -31,7 +43,7 @@
         class="col-sm-3"
         style="margin-bottom:15px;margin-left:auto; margin-right:0;"
       >
-        <b-button @click="target = ''" class="btn btn-block">กลับ</b-button>
+        <b-button @click="target = ''" class="btn btn-block">ปิด</b-button>
       </div>
     </div>
 
@@ -39,7 +51,7 @@
       <div class="col-sm text-center">
         <button
           type="button"
-          @click="target = noti"
+          @click="target = noti;queryCountnoti();"
           class="btn btn-warning btn-lg"
         >
           แจ้งเรื่องร้องเรียน
@@ -49,7 +61,7 @@
       <div class="col-sm text-center">
         <button
           type="button"
-          @click="target = forgot"
+          @click="target = forgot;queryCountforgot()"
           class="btn btn-info btn-lg"
         >
           แจ้งเรื่องลืมของ
@@ -57,7 +69,7 @@
         </button>
       </div>
       <div class="col-sm text-center">
-        <button type="button" @click="target = all" class="btn btn-dark btn-lg">
+        <button type="button" @click="target = all;queryCountall()" class="btn btn-dark btn-lg">
           แจ้งเรื่องทั้งหมด
           <span class="badge badge-light">{{
             forgot.length + noti.length
@@ -80,6 +92,24 @@ export default {
     };
   },
   methods: {
+
+ all_Update(){
+
+    this.queryCountforgot();
+    this.queryCountnoti();
+    this.queryCountall();
+
+},
+
+
+    async noti_Reply(Oid){
+
+     await this.Parse.Cloud.run('noti_Reply', {
+        nOid:Oid ,
+      });
+     this.all_Update()
+      
+    },
     async queryCountforgot() {
       this.forgot = await this.Parse.Cloud.run('noti_Search', {
         get: 'forgot',
