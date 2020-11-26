@@ -71,185 +71,187 @@
           <!-- End Type Zone -->
           <!-- Device Zone -->
           <div class="col-sm-8 ">
-                 <div class="card" style="width: auto">
+            <div class="card" style="width: auto">
               <div class="card-header">อุปกรณ์</div>
               <div class="row">
                 <div class="col-sm-6 " style="padding-right:0px;">
-                <ul class="list-group list-group-flush border-right"  >
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="โปรเจ็คเตอร์"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      โปรเจ็คเตอร์
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="จอภาพ"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      จอภาพ
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="เครื่องเสียง"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      เครื่องเสียง
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="ไฟสปอตไลท์"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      ไฟสปอตไลท์
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="โต๊ะพร้อมเก้าอี้"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      โต๊ะพร้อมเก้าอี้
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="ปลั๊กไฟ"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      ปลั๊กไฟ
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="อัฒจรรย์กลางแจ้ง"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      อัฒจรรย์กลางแจ้ง
-                    </label>
-                  </li>
-                </ul></div>
+                  <ul class="list-group list-group-flush border-right">
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="โปรเจ็คเตอร์"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        โปรเจ็คเตอร์
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="จอภาพ"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        จอภาพ
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="เครื่องเสียง"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        เครื่องเสียง
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="ไฟสปอตไลท์"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        ไฟสปอตไลท์
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="โต๊ะพร้อมเก้าอี้"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        โต๊ะพร้อมเก้าอี้
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="ปลั๊กไฟ"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        ปลั๊กไฟ
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="อัฒจรรย์กลางแจ้ง"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        อัฒจรรย์กลางแจ้ง
+                      </label>
+                    </li>
+                  </ul>
+                </div>
                 <div class="col-sm-6 " style="padding-left:0px;">
-                <ul  class="list-group list-group-flush border-left">
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="เครื่องฉายภาพสามมิติ"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      เครื่องฉายภาพสามมิติ
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="คอมพิวเตอร์"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      คอมพิวเตอร์
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="ไวท์บอร์ด"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      ไวท์บอร์ด
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="เก้าอี้"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      เก้าอี้
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="เครื่องปรับอากาศ"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      เครื่องปรับอากาศ
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="พัดลม"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      พัดลม
-                    </label>
-                  </li>
-                  <li class="list-group-item">
-                    <label class="checkbox-bootstrap">
-                      <input
-                        value="โกล์ฟุตบอล"
-                        type="checkbox"
-                        v-model="devices"
-                        @change="updatefindtext()"
-                      />
-                      <span class="checkbox-placeholder"></span>
-                      โกล์ฟุตบอล
-                    </label>
-                  </li>
-                </ul></div>
+                  <ul class="list-group list-group-flush border-left">
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="เครื่องฉายภาพสามมิติ"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        เครื่องฉายภาพสามมิติ
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="คอมพิวเตอร์"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        คอมพิวเตอร์
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="ไวท์บอร์ด"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        ไวท์บอร์ด
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="เก้าอี้"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        เก้าอี้
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="เครื่องปรับอากาศ"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        เครื่องปรับอากาศ
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="พัดลม"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        พัดลม
+                      </label>
+                    </li>
+                    <li class="list-group-item">
+                      <label class="checkbox-bootstrap">
+                        <input
+                          value="โกล์ฟุตบอล"
+                          type="checkbox"
+                          v-model="devices"
+                          @change="updatefindtext()"
+                        />
+                        <span class="checkbox-placeholder"></span>
+                        โกล์ฟุตบอล
+                      </label>
+                    </li>
+                  </ul>
+                </div>
               </div>
-         </div>
+            </div>
           </div>
 
           <!-- End Device Zone -->
@@ -312,15 +314,31 @@
               >
             </h5>
             <ul class="list-group" v-for="item in News_Contain" :key="item.id">
-              <li class="list-group-item">{{item.get('News_Contain')}}</li>
+              <li class="list-group-item">{{ item.get('News_Contain') }}</li>
             </ul>
           </div>
         </div>
 
-<div class="col">
-<router-link to="Admin"> <button type="button" style="width:100%;margin-top:15px;" class="btn btn-info ">ผู้ดูแลระบบ</button></router-link>
-<router-link to="Building_Home"><button type="button" style="width:100%;margin-top:7px;" class="btn btn-success ">ฝ่ายอาคารและสถานที่</button></router-link>
-</div>
+        <div class="col">
+          
+          <button
+            type="button"
+            @click="login_Admin"
+            style="width:100%;margin-top:15px;"
+            class="btn btn-info "
+          >
+            ผู้ดูแลระบบ
+          </button>
+           
+            <button
+              type="button"
+               @click="login_Building"
+              style="width:100%;margin-top:7px;"
+              class="btn btn-success "
+            >
+              ฝ่ายอาคารและสถานที่
+            </button> 
+        </div>
 
         <!--End News -->
       </div>
@@ -335,6 +353,40 @@
 export default {
   name: 'Home',
   methods: {
+    login_Admin() {
+      this.$fire({
+        title: 'ADMIN ZONE LOGIN',
+        input: 'password',
+        inputLabel: 'Password',
+        inputPlaceholder: 'Enter your password',
+        inputAttributes: {
+          maxlength: 10,
+          autocapitalize: 'off',
+          autocorrect: 'off',
+        },
+      }).then((r) => {
+        if (r.value == '1150123') {
+          this.$router.push({ name: 'Admin' });
+        }
+      });
+    },
+        login_Building() {
+      this.$fire({
+        title: 'ADMIN ZONE LOGIN',
+        input: 'password',
+        inputLabel: 'Password',
+        inputPlaceholder: 'Enter your password',
+        inputAttributes: {
+          maxlength: 10,
+          autocapitalize: 'off',
+          autocorrect: 'off',
+        },
+      }).then((r) => {
+        if (r.value == '1150123') {
+          this.$router.push({ name: 'Building_Home' });
+        }
+      });
+    },
     updatefindtext() {
       this.findtext =
         ' สถานที่ประเภท' +
@@ -348,9 +400,12 @@ export default {
     },
 
     async searchfilter() {
-
-if(this.pmax == 'ไม่จำกัด'){this.pmax = null}
-if(this.ptype == 'ทั้งหมด'){this.ptype=null}
+      if (this.pmax == 'ไม่จำกัด') {
+        this.pmax = null;
+      }
+      if (this.ptype == 'ทั้งหมด') {
+        this.ptype = null;
+      }
 
       this.$store.dispatch(
         'search_filterAction',
@@ -369,8 +424,7 @@ if(this.ptype == 'ทั้งหมด'){this.ptype=null}
       } catch (error) {
         alert(error);
       }
-      }
-
+    },
   },
   data() {
     return {
@@ -378,7 +432,7 @@ if(this.ptype == 'ทั้งหมด'){this.ptype=null}
       pmax: '', //จำนวนรองรับ
       devices: [],
       findtext: '',
-      News_Contain:'',
+      News_Contain: '',
     };
   },
 

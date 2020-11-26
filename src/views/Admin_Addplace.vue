@@ -196,6 +196,14 @@
         </div>
 
         <div class="col-sm-7">
+          <span
+            v-show="
+              !(placeName.length >= 10 && placeName.length <= 60) &&
+                placeName.length > 0
+            "
+            style="color:red"
+            >ชื่อสถานที่ต้องอยู่ระหว่าง 10 ถึง 60 ตัวอักษร</span
+          >
           <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label"
               >ชื่อสถานที่ :</label
@@ -228,7 +236,11 @@
               <option value="300">ไม่เกิน 300 คน</option>
             </select>
           </div>
-
+          <span
+            v-show="!isPhoneNo(placePhone) && placePhone.length > 0"
+            style="color:red"
+            >โปรดใส่เบอร์ที่ถูกต้อง</span
+          >
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"
@@ -243,7 +255,14 @@
               aria-describedby="basic-addon1"
             />
           </div>
-
+          <span
+            v-show="
+              !(placeDetail.length >= 10 && placeDetail.length <= 200) &&
+                placeDetail.length > 0
+            "
+            style="color:red"
+            >รายละเอียดสถานที่ต้องอยู่ระหว่าง 10 ถึง 200 ตัวอักษร</span
+          >
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">รายละเอียดสถานที่</span>
@@ -254,6 +273,14 @@
               aria-label="With textarea"
             ></textarea>
           </div>
+          <span
+            v-show="
+              !(placeAddress.length >= 5 && placeAddress.length <= 50) &&
+                placeAddress.length > 0
+            "
+            style="color:red"
+            >ที่อยู่สถานที่ต้องอยู่ระหว่าง 5 ถึง 50 ตัวอักษร</span
+          >
           <div style="margin-top:15px;" class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">ที่อยู่สถานที่</span>
@@ -268,7 +295,10 @@
       </div>
       <div class="row justify-content-end" style="margin:1%;margin-top:50px;">
         <div style="margin-bottom:15px;" class="col-sm-3">
-          <b-button class="btn btn-block" @click="addPlace()"
+          <b-button
+            :disabled="!addplace_Valid()"
+            class="btn btn-block"
+            @click="addPlace()"
             >เพิ่มสถานที่</b-button
           >
         </div>
@@ -287,19 +317,47 @@ export default {
   name: 'Admin_addPlace',
   data() {
     return {
-      file1: null,
-      file2: null,
-      file3: null,
+      file1: '',
+      file2: '',
+      file3: '',
       devices: [],
-      placeName: null,
+      placeName: '',
       placeType: 'ประเภทสถานที่',
       placeMax: 'รองรับคน',
-      placePhone: null,
-      placeDetail: null,
-      placeAddress: null,
+      placePhone: '',
+      placeDetail: '',
+      placeAddress: '',
     };
   },
   methods: {
+    isPhoneNo(input) {
+      var regExp = /^0[0-9]{8,9}$/i;
+      return regExp.test(input);
+    },
+
+    addplace_Valid() {
+      if (
+        this.placeName &&
+        this.placeType &&
+        this.placeMax &&
+        this.placePhone &&
+        this.placeDetail &&
+        this.placeAddress &&
+        this.file1 &&
+        this.file2 &&
+        this.file3 &&
+        this.placeName.length >= 10 &&
+        this.placeName.length <= 60 &&
+        this.isPhoneNo(this.placePhone) &&
+        this.placeDetail.length >= 10 &&
+        this.placeDetail.length <= 200 &&
+        this.placeAddress.length >= 5 &&
+        this.placeAddress.length <= 50
+      ) {
+        return true;
+      }
+    },
+
     photo1(event) {
       this.file1 = new this.Parse.File(
         'image1.png',
@@ -325,21 +383,67 @@ export default {
       this.file3.save();
     },
 
-    async addPlace() {
-      await this.Parse.Cloud.run('place_ADD', {
-        file1: this.file1,
-        file2: this.file2,
-        file3: this.file3,
-        placeDevices: this.devices,
-        placeName: this.placeName,
-        placeType: this.placeType,
-        placeMax: this.placeMax,
-        placePhone: this.placePhone,
-        placeDetail: this.placeDetail,
-        placeAddress: this.placeAddress,
-      });
+    clear_Target() {
+      (this.file1 = ''),
+        (this.file2 = ''),
+        (this.file3 = ''),
+        (this.devices = []),
+        (this.placeName = ''),
+        (this.placeType = 'ประเภทสถานที่'),
+        (this.placeMax = 'รองรับคน'),
+        (this.placePhone = ''),
+        (this.placeDetail = ''),
+        (this.placeAddress = '');
     },
+    async checknamePlace_duplicate(placeName) {
+      let rs = await this.Parse.Cloud.run('place', {
+        placeName: placeName,
+      });
+     if(rs.length==0){return false}else{return true}
+    },
+
+    async addPlace() {
+      let e = true;
+ 
+if(await this.checknamePlace_duplicate(this.placeName)){
+this.$alert(
+          'มีสถานที่ชื่อนี้แล้ว ไม่สามารถเพิ่มสถานที่ได้',
+          'ไม่สามารถเพิ่มสถานที่',
+          'warning'
+        );
+}else{
+
+      try {
+        await this.Parse.Cloud.run('place_ADD', {
+          file1: this.file1,
+          file2: this.file2,
+          file3: this.file3,
+          placeDevices: this.devices,
+          placeName: this.placeName,
+          placeType: this.placeType,
+          placeMax: this.placeMax,
+          placePhone: this.placePhone,
+          placeDetail: this.placeDetail,
+          placeAddress: this.placeAddress,
+        });
+      } catch (error) {
+        this.$alert(
+          'ไม่สามารถเพิ่มสถานที่ได้' + error.message,
+          'ไม่สามารถเพิ่มสถานที่',
+          'warning'
+        );
+        e = false;
+      }
+      if (e) {
+        this.$alert('เพิ่มสถานที่สำเร็จ', 'เพิ่มสถานที่', 'success');
+        this.clear_Target();
+      }}
+    },
+
   },
+      mounted() {
+      
+    },
 };
 </script>
 

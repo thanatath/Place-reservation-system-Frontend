@@ -2,10 +2,7 @@
   <div class="container">
     <div class="row" style="margin:1%">
       <div class="col-sm">
-        <img
-          class="img-fluid"
-          src="../assets/Sub_Logo_KMITL_KMITL.png"
-        />
+        <img class="img-fluid" src="../assets/Sub_Logo_KMITL_KMITL.png" />
       </div>
       <div class="col-sm ">
         <center><h4>เข้าสู่ระบบ</h4></center>
@@ -40,13 +37,13 @@
           <div class="col-sm-6">
             <button
               @click="login()"
+              :disabled='!(username.length>=4)||!(passwd.length>=6)'
               style="width:100%"
               type="button"
               class="btn btn-dark "
             >
               เข้าสู่ระบบ
             </button>
-            
           </div>
         </div>
       </div>
@@ -62,18 +59,27 @@ export default {
     return {
       username: '',
       passwd: '',
-      loginuser : '',
+      loginuser: '',
     };
   },
   methods: {
     async login() {
-      await this.Parse.User.logIn(this.username, this.passwd);
+      let e = true
+      try {
+        await this.Parse.User.logIn(this.username, this.passwd);
+      } catch (error) {
+        e = false
+        if(error.code==101){this.$alert('ชื่อผู้ใช้ หรือรหัสผ่าน ผิดพลาด','ไม่สามารถเข้าสู่ระบบ','warning')}
+      }
+      if(e){this.$alert('เข้าสู่ระบบเรียบร้อยแล้ว','เข้าสู่ระบบ','success')}
+
+     
+
       var currentUser = this.Parse.User.current();
       if (currentUser) {
-       this.$store.dispatch('loginstateAction',currentUser.get('username')) 
-       this.$router.push('/')
-      } else {
-        alert('รหัสผ่านผิด');
+        this.$store.dispatch('loginstateAction', currentUser.get('username'));
+
+        this.$router.push('/');
       }
     },
   },

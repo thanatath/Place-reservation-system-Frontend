@@ -21,7 +21,7 @@
               <img
                 @load="bodyload"
                 class="card-img-top"
-                :src="item.get('img').url()"
+                :src="'https://kmitlplace2.tk/'+item.get('img').url().substring(item.get('img').url().indexOf('parse'))"
                 alt="Card image cap"
               />
             </div>

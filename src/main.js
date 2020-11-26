@@ -7,22 +7,25 @@ import Parse from 'parse';
 import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Carousel3d from 'vue-carousel-3d';
+import VueSimpleAlert from "vue-simple-alert";
 Vue.use(require('vue-cookies'))
 Vue.use(Carousel3d);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueSimpleAlert, { reverseButtons: true });
 
 const ParsePlugin = {
   install(Vue) {
     console.log('[+]init parse server');
     var myparseServer;
-    if (Vue.config.devtools) { //check if it's in production mode
-      myparseServer = 'http://localhost:1337/parse'
-    }else{
-       myparseServer = 'http://shibasan.3bbddns.com:15294/parse'
-    }
+ 
+       myparseServer = 'https://kmitlplace2.tk/parse'
+ 
 
-    Parse.initialize('myAppId'); 
+ 
+
+    Parse.initialize(process.env.VUE_APP_APP_KEY); 
+    
     Parse.serverURL = myparseServer; 
 
     Vue.prototype.Parse = Parse;

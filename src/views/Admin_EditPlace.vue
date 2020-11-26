@@ -285,14 +285,14 @@
             <b-button
               class="btn btn-block btn btn-warning"
               @click="updatePlace()"
+              :disabled="!editplace_Valid()"
               >แก้ไขสถานที่</b-button
             >
           </div>
           <div class="col-sm-3">
-           
-              <b-button @click="clearselect" class="btn btn-block"
-                >ยกเลิก</b-button
-              >
+            <b-button @click="clearselect" class="btn btn-block"
+              >ยกเลิก</b-button
+            >
           </div>
         </div>
       </div>
@@ -327,7 +327,13 @@
                   </button>
                 </td>
                 <td>
-                  <button type="button" @click="place_Del(item.id)" class="btn btn-danger">ลบ</button>
+                  <button
+                    type="button"
+                    @click="place_Del(item.id)"
+                    class="btn btn-danger"
+                  >
+                    ลบ
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -363,6 +369,7 @@ export default {
       file2: null,
       file3: null,
       devices: [],
+      placeName_Tmp: null,
       placeName: null,
       placeType: 'ประเภทสถานที่',
       placeMax: 'รองรับคน',
@@ -372,11 +379,24 @@ export default {
       placeImg1: null,
       placeImg2: null,
       placeImg3: null,
-      placeoid:null,
+      placeoid: null,
     };
   },
 
   methods: {
+    editplace_Valid() {
+      if (
+        this.placeName &&
+        this.placeType &&
+        this.placeMax &&
+        this.placePhone &&
+        this.placeDetail &&
+        this.placeAddress
+      ) {
+        return true;
+      }
+    },
+
     photo1(event) {
       this.file1 = new this.Parse.File(
         'image1.png',
@@ -392,7 +412,6 @@ export default {
         'image/png'
       );
       this.file2.save();
-       
     },
     photo3(event) {
       this.file3 = new this.Parse.File(
@@ -404,24 +423,64 @@ export default {
     },
 
     async updatePlace() {
-      await this.Parse.Cloud.run('place_Update', {
-        placeOid: this.placeoid,
-        file1: this.file1,
-        file2: this.file2,
-        file3: this.file3,
-        devices: this.devices,
-        placeName: this.placeName,
-        placeType: this.placeType,
-        placeMax: this.placeMax,
-        placePhone: this.placePhone,
-        placeDetail: this.placeDetail,
-        placeAddress: this.placeAddress,
-      });
+      if (this.placeName_Tmp == this.placeName) {
+               await this.Parse.Cloud.run('place_Update', {
+          placeOid: this.placeoid,
+          file1: this.file1,
+          file2: this.file2,
+          file3: this.file3,
+          devices: this.devices,
+          placeName: this.placeName,
+          placeType: this.placeType,
+          placeMax: this.placeMax,
+          placePhone: this.placePhone,
+          placeDetail: this.placeDetail,
+          placeAddress: this.placeAddress,
+        });
+
+        this.$alert('แก้ไขสถานที่แล้ว', 'แก้ไขสถานที่', 'success');
+
+        await this.query();
+        await this.queryselect(this.placeoid);
+      }else if(!(await this.checknamePlace_duplicate(this.placeName))){
+
+               await this.Parse.Cloud.run('place_Update', {
+          placeOid: this.placeoid,
+          file1: this.file1,
+          file2: this.file2,
+          file3: this.file3,
+          devices: this.devices,
+          placeName: this.placeName,
+          placeType: this.placeType,
+          placeMax: this.placeMax,
+          placePhone: this.placePhone,
+          placeDetail: this.placeDetail,
+          placeAddress: this.placeAddress,
+        });
+
+        this.$alert('แก้ไขสถานที่แล้ว', 'แก้ไขสถานที่', 'success');
+
+        await this.query();
+        await this.queryselect(this.placeoid);
+
+      }else{
+        this.$alert(
+          'มีสถานที่ชื่อนี้แล้ว ไม่สามารถเพิ่มสถานที่ได้',
+          'ไม่สามารถเพิ่มสถานที่',
+          'warning'
+        );
+      }
       await this.query();
-      await this.queryselect(this.placeoid)
+      await this.queryselect(this.placeoid);
     },
     clearselect() {
       this.myplaceselect = '';
+    },
+    async checknamePlace_duplicate(placeName) {
+      let rs = await this.Parse.Cloud.run('place', {
+        placeName: placeName,
+      });
+     if(rs.length==0){return false}else{return true}
     },
 
     async queryselect(placeId) {
@@ -430,6 +489,7 @@ export default {
       });
       this.placeoid = this.myplaceselect[0].id;
       this.placeName = this.myplaceselect[0].get('Place_name');
+      this.placeName_Tmp = this.myplaceselect[0].get('Place_name');
       this.placeType = this.myplaceselect[0].get('Place_type');
       this.placeMax = this.myplaceselect[0].get('Place_max');
       this.placePhone = this.myplaceselect[0].get('Place_phone');
@@ -444,9 +504,24 @@ export default {
     async query() {
       this.myplace = await this.Parse.Cloud.run('place');
     },
-        async place_Del(placeoid) {
-         
-      await this.Parse.Cloud.run('place_Del',{ delid:placeoid});
+    async place_Del(placeoid) {
+      let e = true;
+      try {
+        await this.Parse.Cloud.run('place_Del', { delid: placeoid });
+      } catch (error) {
+        this.$alert(
+          'ไม่สามารถลบสถานที่ได้' + error.message,
+          'ไม่สามารถลบสถานที่',
+          'warning'
+        );
+        e = false;
+        await this.query();
+      }
+
+      if (e) {
+        this.$alert('ลบสถานที่สำเร็จ', 'ลบสถานที่', 'success');
+        await this.query();
+      }
     },
   },
   mounted() {
