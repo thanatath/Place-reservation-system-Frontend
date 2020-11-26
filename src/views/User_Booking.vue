@@ -105,10 +105,39 @@
         </table>
       </div>
     </div>
+    <div>
+      <div>
+        <b-modal
+          :no-close-on-backdrop="true"
+          v-model="modal"
+          hide-footer
+          hide-header
+        >
+          <div class="d-block text-center">
+            <h3>โปรดเข้าสู่ระบบก่อนเข้าสู้ส่วนผู้ใช้งาน</h3>
+          </div>
+          <b-button
+            class="mt-3"
+            variant="outline-danger"
+            block
+            @click="$router.push('/User_Login')"
+            >เข้าสู่ระบบ</b-button
+          >
+          <b-button
+            class="mt-2"
+            variant="outline-warning"
+            block
+            @click="$router.push('/User_Regis')"
+            >สมัครสมาชิก</b-button
+          >
+        </b-modal>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'User_Booking',
   data() {
@@ -118,11 +147,18 @@ export default {
       notitarget_Img: '',
       type: [],
       description: null,
+      modal: false,
     };
   },
   methods: {
+    cleartarget() {
+      this.notitarget = null;
+    },
     async noti_Action() {
-      var currentUser = this.Parse.User.current();
+
+let e = true
+try {
+        var currentUser = this.Parse.User.current();
       await this.Parse.Cloud.run('noti', {
         place_Id: this.notitarget[0].id,
         place_Name: this.notitarget[0].get('Place_name'),
@@ -130,27 +166,59 @@ export default {
         noti_Description: this.description,
         user_Name: currentUser.get('username'),
       });
+} catch (error) {
+  this.$alert('ไม่สามารถแจ้งเรื่องได้ '+error.message,'แจ้งเรื่อง','warning');
+  e = false
+}
+if (e){this.$alert('แจ้งเรื่องแล้ว','แจ้งเรื่อง','success');}
+
+await this.cleartarget();
+      
+      
+      
     },
     async query() {
       var currentUser = this.Parse.User.current();
       this.mybooked = await this.Parse.Cloud.run('placeBooked', {
-        username: currentUser.get('username'),
+        Place_username: currentUser.get('username'),
       });
+      
     },
     async querytarget(place_Id) {
-      this.notitarget = await this.Parse.Cloud.run('place', {
-        placeid: place_Id,
-      });
-      this.notitarget_Img = this.notitarget[0].get('img').url();
+     
+      try {
+        this.notitarget = await this.Parse.Cloud.run('place', {
+          placeid: place_Id,
+        });
+
+
+
+        this.notitarget_Img = 'https://kmitlplace2.tk/'+this.notitarget[0].get('img').url().substring(this.notitarget[0].get('img').url().indexOf('parse'));
+      } catch (error) {
+        if (error.message == "Cannot read property 'get' of undefined") {
+          this.$alert(
+            'สถานที่นี้ไม่มีอยู่แล้ว ไม่สามารถแจ้งเรื่องได้',
+            'ไม่สามารถแจ้งเรื่อง',
+            'warning'
+          );
+          
+        }
+
+        this.cleartarget();
+      }
+      
+ 
     },
     noti(place_Id) {
       this.querytarget(place_Id);
     },
   },
+  computed: mapState(['search', 'loginstate', 'searchfilter']),
   mounted() {
     this.query();
+    if (!this.loginstate) {
+      this.modal = true;
+    }
   },
 };
 </script>
-
-<style></style>

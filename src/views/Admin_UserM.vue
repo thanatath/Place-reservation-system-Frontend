@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="col-sm">
           <div class="alert adminStyle" role="alert">
-            <h4 class="text-center">เลือกแก้ไข, ผู้ใช้งาน</h4>
+            <h4 class="text-center">ข้อมูลผู้ใช้งานผู้ใช้งาน</h4>
           </div>
 
           <div class="row justify-content-center" style="margin-bottom:15px;">
@@ -171,6 +171,22 @@
           </table>
         </div>
       </div>
+
+      <div class="row justify-content-end">
+        <div class="col-3">
+          <router-link to="Admin">
+            <button
+              style="width:100%;margin-top:10px;"
+              type="button"
+              v-show="!myuserSelect"
+              class="btn btn-secondary"
+            >
+              กลับ
+            </button></router-link
+          >
+        </div>
+      </div>
+
     </div>
   </div>
 </template>

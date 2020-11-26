@@ -17,21 +17,23 @@
                   <div class="carousel-item active">
                     <img
                       class="d-block w-100"
-                      :src="item.get('img').url()"
+                      :src="'https://kmitlplace2.tk/'+item.get('img').url().substring(item.get('img').url().indexOf('parse'))"
                       alt="First slide"
                     />
+                 
+                 
                   </div>
                   <div class="carousel-item">
                     <img
                       class="d-block w-100"
-                      :src="item.get('img_2').url()"
+                      :src="'https://kmitlplace2.tk/'+item.get('img_2').url().substring(item.get('img').url().indexOf('parse'))"
                       alt="Second slide"
                     />
                   </div>
                   <div class="carousel-item">
                     <img
                       class="d-block w-100"
-                      :src="item.get('img_3').url()"
+                      :src="'https://kmitlplace2.tk/'+item.get('img_3').url().substring(item.get('img').url().indexOf('parse'))"
                       alt="Third slide"
                     />
                   </div>
@@ -322,7 +324,10 @@ console.log(myar);
 
   async bookingaction(Place_id,Place_name,Place_contact) {
       var currentUser = this.Parse.User.current();
-      await this.Parse.Cloud.run('booking', {
+
+let e = true
+try {
+        await this.Parse.Cloud.run('booking', {
         Name_booking: currentUser.get('username'),
         Place_id: Place_id,
         Place_name:Place_name,
@@ -334,7 +339,17 @@ console.log(myar);
         Month_booking: new Date(this.datevalue).getMonth() + 1,
         Day_booking: new Date(this.datevalue).getDate(),
       });
-      this.$router.push({ name: 'User_Booking' });
+} catch (error) {
+   this.$alert('ไม่สามารถจองสถานที่ได้'+error.message,'ไม่สามารถจองสถานที่','warning')
+  e = false
+}
+if(e){this.$alert('จองสถานที่สำเร็จ โปรดตรวจสอบรายละเอียดการจองสถานที่ในรายการจอง','จองสถานที่','success')
+ this.$router.push({ name: 'User_Booking' });
+}
+
+
+
+       
 
     },
 async clearbooked(){
@@ -388,6 +403,8 @@ async clearbooked(){
         placeid: this.$cookies.get('placebooking'),
         
       });
+
+     
        
     },
     cancelbooking() {
