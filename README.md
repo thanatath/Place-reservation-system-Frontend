@@ -1,9 +1,14 @@
 
-**โปรเจค "ระบบจองสถานที่จัดกิจกรรมภายในคณะวิศวกรรมศาสตร์"**
+**Assignment "ระบบจองสถานที่จัดกิจกรรมภายในคณะวิศวกรรมศาสตร์"**
 
  **install package for Dev**
 
     npm install
+
+ **.ENV**
+
+    VUE_APP_ENV_BACKENDHOST = Parse server address !
+    VUE_APP_ENV_KEY = Parse server backend key !
  
 **Run Product (Front End only)**
 

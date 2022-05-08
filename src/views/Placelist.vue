@@ -21,7 +21,7 @@
               <img
                 @load="bodyload"
                 class="card-img-top"
-                :src="'https://kmitlplace2.tk/'+item.get('img').url().substring(item.get('img').url().indexOf('parse'))"
+                :src=" hostBackend +item.get('img').url().substring(item.get('img').url().indexOf('parse'))"
                 alt="Card image cap"
               />
             </div>
@@ -95,6 +95,7 @@
 
 <script>
 import { mapState } from 'vuex';
+
 export default {
   name: 'Placelist',
   methods: {
@@ -131,11 +132,16 @@ export default {
       searchtext: this.search,
       modal: false,
       pageload: false,
+      hostBackend: process.env.VUE_APP_ENV_BACKENDHOST.split('/parse')[0]+'/',
     };
   },
   computed: mapState(['search', 'loginstate', 'searchfilter']),
 
   mounted() {
+    
+ 
+ 
+ 
     if (this.searchfilter) {
       this.myplace = this.searchfilter;
       if(this.myplace.length==0){this.pageload=true}

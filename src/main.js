@@ -8,6 +8,7 @@ import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Carousel3d from 'vue-carousel-3d';
 import VueSimpleAlert from "vue-simple-alert";
+
 Vue.use(require('vue-cookies'))
 Vue.use(Carousel3d);
 Vue.use(BootstrapVue)
@@ -17,17 +18,12 @@ Vue.use(VueSimpleAlert, { reverseButtons: true });
 const ParsePlugin = {
   install(Vue) {
     console.log('[+]init parse server');
-    var myparseServer;
- 
-       myparseServer = 'https://kmitlplace2.tk/parse'
  
 
- 
-
-    Parse.initialize(process.env.VUE_APP_APP_KEY); 
+    Parse.initialize(process.env.VUE_APP_ENV_KEY); 
     
-    Parse.serverURL = myparseServer; 
-
+    Parse.serverURL = process.env.VUE_APP_ENV_BACKENDHOST; 
+ 
     Vue.prototype.Parse = Parse;
   },
 };
