@@ -499,6 +499,7 @@ export default {
       this.placeImg1 = this.myplaceselect[0].get('img').url();
       this.placeImg2 = this.myplaceselect[0].get('img_2').url();
       this.placeImg3 = this.myplaceselect[0].get('img_3').url();
+    
       window.scrollTo(0, 0);
     },
     async query() {

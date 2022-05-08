@@ -17,7 +17,7 @@
                   <div class="carousel-item active">
                     <img
                       class="d-block w-100"
-                      :src="'https://kmitlplace2.tk/'+item.get('img').url().substring(item.get('img').url().indexOf('parse'))"
+                      :src="hostBackend+item.get('img').url().substring(item.get('img').url().indexOf('parse'))"
                       alt="First slide"
                     />
                  
@@ -26,14 +26,14 @@
                   <div class="carousel-item">
                     <img
                       class="d-block w-100"
-                      :src="'https://kmitlplace2.tk/'+item.get('img_2').url().substring(item.get('img').url().indexOf('parse'))"
+                      :src="hostBackend+item.get('img_2').url().substring(item.get('img').url().indexOf('parse'))"
                       alt="Second slide"
                     />
                   </div>
                   <div class="carousel-item">
                     <img
                       class="d-block w-100"
-                      :src="'https://kmitlplace2.tk/'+item.get('img_3').url().substring(item.get('img').url().indexOf('parse'))"
+                      :src="hostBackend+item.get('img_3').url().substring(item.get('img').url().indexOf('parse'))"
                       alt="Third slide"
                     />
                   </div>
@@ -262,6 +262,7 @@ export default {
       timeed: 1,
       rsbooked: '',
       validstat: '',
+      hostBackend: process.env.VUE_APP_ENV_BACKENDHOST.split('/parse')[0]+'/',
     };
   },
   methods: {
