@@ -23,6 +23,7 @@
           <b-form-file
             style="margin-bottom:15px;"
             @change="photo1($event)"
+           
             :state="Boolean(file1)"
             placeholder="เลือกรูปภาพแทนที่รูปที่ 1 ... "
             drop-placeholder="Drop file here..."
@@ -30,7 +31,7 @@
           <b-form-file
             style="margin-bottom:15px;"
             @change="photo2($event)"
-            v-model="file2"
+           
             :state="Boolean(file2)"
             placeholder="เลือกรูปภาพแทนที่รูปที่ 2 ... "
             drop-placeholder="Drop file here..."
@@ -38,7 +39,7 @@
           <b-form-file
             style="margin-bottom:15px;"
             @change="photo3($event)"
-            v-model="file3"
+          
             :state="Boolean(file3)"
             placeholder="เลือกรูปภาพแทนที่รูปที่ 3 ... "
             drop-placeholder="Drop file here..."
@@ -403,7 +404,7 @@ export default {
         event.target.files[0],
         'image/png'
       );
-      this.file1.save();
+       
     },
     photo2(event) {
       this.file2 = new this.Parse.File(
@@ -411,7 +412,8 @@ export default {
         event.target.files[0],
         'image/png'
       );
-      this.file2.save();
+      
+       
     },
     photo3(event) {
       this.file3 = new this.Parse.File(
@@ -419,10 +421,18 @@ export default {
         event.target.files[0],
         'image/png'
       );
-      this.file3.save();
+       
     },
 
     async updatePlace() {
+
+      this.file1.save();
+      this.file2.save();
+      this.file3.save();
+
+      console.log(this.file1)
+      console.log(this.file2)
+
       if (this.placeName_Tmp == this.placeName) {
                await this.Parse.Cloud.run('place_Update', {
           placeOid: this.placeoid,
